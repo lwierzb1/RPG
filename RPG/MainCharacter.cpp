@@ -1,19 +1,27 @@
 #include "MainCharacter.h"
 
-MainCharacter::MainCharacter(SDL_Renderer *passedRenderer, std::string FilePath, int x, int y, int w, int h, int *passedCameraX, int *passedCameraY, int amountOfXFrames, int amountOfYFrames, CollisionRectangle passedCollisonRect, SDL_setup *passedSDL)
-	:Character(passedRenderer,FilePath,x,y,w,h,passedCameraX,passedCameraY, amountOfXFrames, amountOfYFrames, passedCollisonRect,passedSDL)
+MainCharacter::MainCharacter(SDL_Renderer *passedRenderer, std::string FilePath, int x, int y, int w, int h, int *passedCameraX, int *passedCameraY, int amountOfXFrames, int amountOfYFrames, CollisionRectangle passedCollisonRect)
+	:Character(passedRenderer,FilePath,x,y,w,h,passedCameraX,passedCameraY, amountOfXFrames, amountOfYFrames, passedCollisonRect)
 {
-	strength = 15;
-	key = idle;
-	//sdlSetup = passedSDL;
 	timeCheck = SDL_GetTicks();
+	
+	level = 1;
+	strength = 15;
+	initialHealth = health;
+	experience = 0;
 	speed = 3;
-	beginX = (WINDOW_WIDTH ) / 2;
-	beginY = (WINDOW_HEIGHT) / 2;
+	luck = 5;
+	experienceNeededToNextLevel = 100;
 	isAttacking = false;
 	mayAttack = true;
+	
+	beginX = (WINDOW_WIDTH ) / 2;
+	beginY = (WINDOW_HEIGHT) / 2;
+	
 	setHeightCrop(getImageHeight() / AMOUNT_OF_ROWS_CHAR);
 	setWidthCrop(getImageWidth() / AMOUNT_OF_COLUMNS_CHAR);
+	
+	key = idle;
 	keyboardState = SDL_GetKeyboardState(NULL);
 }
 void MainCharacter::update(Environment *environment)
@@ -24,8 +32,8 @@ void MainCharacter::update(Environment *environment)
 	//update location of character
 	x = *cameraX + beginX;
 	y = -*cameraY + beginY;
-	//std::cout << "X" << *cameraX << std::endl;
-	//std::cout << "Y" << *cameraY << std::endl;
+	//std::cout << "X" << x << std::endl;
+	//std::cout << "Y" << y << std::endl;
 }
 void MainCharacter::ResetKeyState()
 {
@@ -117,7 +125,24 @@ void MainCharacter::moveCharacter()
 }
 void MainCharacter::setExperience(int exp)
 {
-	experience = exp;
+	experience += exp;
+	if (experience >= experienceNeededToNextLevel)
+	{
+		level++;
+		experienceNeededToNextLevel = 100 * level;
+		experience = 0;
+		levelUp();
+	}
+}
+void MainCharacter::levelUp()
+{
+	luck += 5;
+	strength += 5;
+	defence += 5;
+	health = initialHealth + (level -1) * 10;
+	//every two levels give 1 speed
+	if(level%2 == 0)
+		speed += 1;
 }
 int MainCharacter::getExperience()
 {

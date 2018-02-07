@@ -230,6 +230,5 @@ SDL_Rect Sprite::getRect()
 Sprite::~Sprite()
 {
 	SDL_DestroyTexture(image);
-	
 
 }

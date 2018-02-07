@@ -2,14 +2,27 @@
 #include "Character.h"
 
 
-Character::Character(SDL_Renderer *passedRenderer, std::string FilePath, int x, int y, int w, int h, int *passedCameraX, int *passedCameraY, int amountOfXFrames, int amountOfYFrames, CollisionRectangle passedCollisonRect, SDL_setup *passedSDL)
+Character::Character(SDL_Renderer *passedRenderer, std::string FilePath, int x, int y, int w, int h, int *passedCameraX, int *passedCameraY, int amountOfXFrames, int amountOfYFrames, CollisionRectangle passedCollisonRect)
 	:Sprite(passedRenderer, FilePath, x, y, w, h, passedCameraX, passedCameraY, amountOfXFrames, amountOfYFrames, passedCollisonRect)
 {
+	level = 1;
 	isAttacking = false;
-	strength = 210;
-	defence = 5;
+	strength = level * 5;
+	defence = level * 5 + 2;
 	health = 100;
 	mayAttack = false;
+	luck = 5 * level;
+}
+Character::Character(SDL_Renderer *passedRenderer, std::string FilePath, int x, int y, int w, int h, int *passedCameraX, int *passedCameraY, int amountOfXFrames, int amountOfYFrames, CollisionRectangle passedCollisonRect, int level)
+	:Sprite(passedRenderer, FilePath, x, y, w, h, passedCameraX, passedCameraY, amountOfXFrames, amountOfYFrames, passedCollisonRect)
+{
+	this->level = level;
+	isAttacking = false;
+	strength = level * 5;
+	defence = level * 5 + 2;
+	health = 100 + level * 10;
+	mayAttack = false;
+
 }
 void Character::setX(int x)
 {
@@ -27,6 +40,10 @@ int Character::getY()
 {
 	return y;
 }
+int Character::getLuck()
+{
+	return luck;
+}
 int Character::getHealth()
 {
 	return health;
@@ -42,6 +59,10 @@ int Character::getDefence()
 void Character::setDefence(int def)
 {
 	defence = def;
+}
+int Character::getLevel()
+{
+	return level;
 }
 void Character::setHealth(int hp)
 {

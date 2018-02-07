@@ -1,5 +1,4 @@
 #include "Fight.h"
-
 Fight::Fight(SDL_setup *sdlSetup, MainCharacter *mainCharacter, Character *enemyCharacter, Environment *environment)
 {
 	//two last are for player hp and enemy hp
@@ -17,7 +16,7 @@ Fight::Fight(SDL_setup *sdlSetup, MainCharacter *mainCharacter, Character *enemy
 	font = TTF_OpenFont("C:/Users/Lukasz/Documents/R/win-library/3.4/rmarkdown/rmd/ioslides/ioslides-13.5.1/fonts/OpenSans.ttf", 10);
 	keyboardState = SDL_GetKeyboardState(NULL);
 	configFightMenu();
-
+	srand((int)time(0));
 }
 bool Fight::fightLoop()
 {
@@ -112,10 +111,7 @@ void Fight::viewFightResult(Character *winner)
 	}
 	enemy->setCurrentFrame(enemy->getAmountOfXFrames() - 1);
 	if (mainCharacterWon)
-	{
 		enemy->changeImage("data/enemyLoseIdle1.png", 1, 1, 250, -25, 360, 400);
-		giveExperienceToMainCharacter();
-	}
 	else
 		enemy->changeImage("data/enemyWinIdle5.png", 5, 1, 250, -25, 360, 400);
 	while (sdlSetup->getMainEvent()->type != SDL_KEYDOWN)
@@ -138,10 +134,6 @@ void Fight::drawBattleMessages()
 	for (int i = 0; i < amountOfAllBattleRects; i++)
 		SDL_RenderCopy(sdlSetup->getRenderer(), battleMessage[i], NULL, &battleMessageRect[i]);
 }
-void Fight::giveExperienceToMainCharacter()
-{
-	character->setExperience(character->getExperience()+100);
-}
 void Fight::performAttack(Character *aggressor, Character *victim)
 {
 	std::string aggressorClassName = typeid(*aggressor).name();
@@ -152,16 +144,23 @@ void Fight::performAttack(Character *aggressor, Character *victim)
 		aggressor->isAttacking = false;
 		victim->mayAttack = true;
 		aggressor->mayAttack = false;
-		if(aggressor->getStrength() <= victim->getDefence())
-			victim->setHealth(victim->getHealth() - 1);
+		//critical strike
+		if (rand() % 100 <= aggressor->getLuck())
+			victim->setHealth(victim->getHealth() - (2*aggressor->getStrength() - victim->getDefence()));
 		else
-			victim->setHealth(victim->getHealth() - (aggressor->getStrength() - victim->getDefence()));
+		{
+			if(aggressor->getStrength() <= victim->getDefence())
+				victim->setHealth(victim->getHealth() - 1);
+			else
+				victim->setHealth(victim->getHealth() - (aggressor->getStrength() - victim->getDefence()));
+		}
 		if (victim->getHealth() < 0)
 			victim->setHealth(0);
 		updateFightMenu();
 	}
 	else
 	{
+		//play idle animatioin
 		if (aggressorClassName.find("MainCharacter") != std::string::npos)
 			victim->playAnimation(0, 17, 0, 150);
 		else

@@ -47,14 +47,23 @@ namespace cppproperties {
 
 		return properties;
 	}
-	std::vector<std::string> PropertiesParser::Split(const std::string & s, char delim)
+	std::vector<std::string> PropertiesParser::Split(const std::string & s, char delim[])
 	{
 		std::stringstream ss(s);
-		std::string item;
+		std::string item, finalItem;
 		std::vector<std::string> elems;
-		while (std::getline(ss, item, delim)) {
-			elems.push_back(item);
-			// elems.push_back(std::move(item)); // if C++11 (based on comment from @mchiasson)
+		int x = strlen(delim);
+		if (strlen(delim) == 2)
+			while (std::getline(ss, item, delim[0])) {
+				std::stringstream s1(item);
+				while(std::getline(s1, finalItem, delim[1]))
+				elems.push_back(finalItem);
+				// elems.push_back(std::move(item)); // if C++11 (based on comment from @mchiasson)
+			}
+		else
+			while (std::getline(ss, item, delim[0])) {
+					elems.push_back(item);
+				// elems.push_back(std::move(item)); // if C++11 (based on comment from @mchiasson)
 		}
 		return elems;
 	}
@@ -62,7 +71,7 @@ namespace cppproperties {
 		Properties pro;
 
 		std::fstream os;
-		os.open(file.c_str(),std::fstream::out);
+		os.open(file.c_str());
 		if (!os.is_open()) {
 			std::string msg = "Unable to write " + file;
 			throw PropertiesException(msg.c_str());

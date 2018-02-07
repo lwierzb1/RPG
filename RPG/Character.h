@@ -1,10 +1,12 @@
 #pragma once
 #include "Sprite.h"
 #include "Environment.h"
+
 class Character : public Sprite
 {
 public:
-	Character(SDL_Renderer *passedRenderer, std::string FilePath, int x, int y, int w, int h, int *passedCameraX, int *passedCameraY, int amountOfXFrames, int amountOfYFrames, CollisionRectangle passedCollisonRect, SDL_setup *passedSDL);
+	Character(SDL_Renderer *passedRenderer, std::string FilePath, int x, int y, int w, int h, int *passedCameraX, int *passedCameraY, int amountOfXFrames, int amountOfYFrames, CollisionRectangle passedCollisonRect);
+	Character::Character(SDL_Renderer *passedRenderer, std::string FilePath, int x, int y, int w, int h, int *passedCameraX, int *passedCameraY, int amountOfXFrames, int amountOfYFrames, CollisionRectangle passedCollisonRect, int level);
 	~Character();
 
 	void setX(int x);
@@ -16,12 +18,17 @@ public:
 	int getDefence();
 	void setDefence(int def);
 	void setHealth(int hp);
+	int getLuck();
+	int getLevel();
 	bool isAttacking;
 	bool mayAttack;
+
 protected:
+	int level;
 	int speed;
 	int health;
 	int strength;
 	int defence;
+	int luck;
 };
 

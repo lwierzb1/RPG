@@ -54,8 +54,8 @@ void Environment::loadFromFile()
 	Properties properties = PropertiesParser::Read("Map.properties");
 	std::vector<std::string> tree;
 	std::string line = properties.getProperty("Trees");
-	
-	tree = PropertiesParser::Split(line, '$');
+	char x[2] = { '$','@'};
+	tree = PropertiesParser::Split(line, x);
 	//current number of iteration
 	int iteration = 0;
 	//temp X for Tree

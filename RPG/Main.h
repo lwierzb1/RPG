@@ -5,14 +5,16 @@
 #include "Environment.h"
 #include "Character.h"
 #include "Fight.h"
-
+#include "PropertiesParser.h"
+#include "Properties.h"
 class Main
 {
 public:
 	Main(int passedScreenWidth, int passedScreenHeight);
 	Main();
 	~Main();
-
+	void loadFromFile();
+	void saveToFile();
 	void GameLoop();
 	bool getQuit();
 	void setQuit(bool updateQuit);
@@ -27,7 +29,8 @@ protected:
 	bool quit;
 	SDL_setup *sdlSetup;
 	MainCharacter *character;
-	Character *enemy;
+	std::vector<Character*> enemies;
+	//Character *enemy;
 	Environment *forestArea;
 };
 

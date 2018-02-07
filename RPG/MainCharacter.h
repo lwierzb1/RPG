@@ -7,19 +7,29 @@
 #include "Character.h"
 class MainCharacter : public Character
 {
+public:
+	MainCharacter(SDL_Renderer *passedRenderer, std::string FilePath, int x, int y, int w, int h, int *passedCameraX, int *passedCameraY, int amountOfXFrames, int amountOfYFrames, CollisionRectangle passedCollisonRect);
+	~MainCharacter();
+	void brushAsideCharacter(int epsilon);
+	void update(Environment *environment);
+	void setExperience(int exp);
+	int getExperience();
+	bool checkIfEnemyisColidingCharacter(Character *enemyCharacter);
+	void ResetKeyState();
+	void levelUp();
 private:
 	void scanKeys();
 	void moveCharacter();
 	void CheckCollision(Environment *environment);
-	//sdl and timing
-	SDL_setup *sdlSetup;
+	
+	int experienceNeededToNextLevel;
+	int initialHealth;
+	int experience;
 	
 	int beginX;
 	int beginY;
 	int timeCheck;
 	//char param
-	int level;
-	int experience;
 	//keyboard input
 	const Uint8 *keyboardState;
 	enum keys
@@ -31,14 +41,5 @@ private:
 		moveDown
 	};
 	keys key;
-public:
-	MainCharacter(SDL_Renderer *passedRenderer, std::string FilePath, int x, int y, int w, int h, int *passedCameraX, int *passedCameraY, int amountOfXFrames, int amountOfYFrames, CollisionRectangle passedCollisonRect, SDL_setup *passedSDL);
-	~MainCharacter();
-	void brushAsideCharacter(int epsilon);
-	void update(Environment *environment);
-	void setExperience(int exp);
-	int getExperience();
-	bool checkIfEnemyisColidingCharacter(Character *enemyCharacter);
-	void ResetKeyState();
 };
 

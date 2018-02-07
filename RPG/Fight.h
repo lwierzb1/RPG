@@ -6,6 +6,7 @@
 #include "MainCharacter.h"
 #include "Environment.h"
 #include "Character.h"
+#include <ctime>
 class Fight 
 {
 public:
@@ -14,7 +15,6 @@ public:
 	bool fightLoop();
 	void configFightMenu();
 	void updateFightMenu();
-	void giveExperienceToMainCharacter();
 	void performAttack(Character *aggressor, Character *victim);
 	void performDefence(Character *defencer, int extraDefence);
 	void drawBattleMessages();

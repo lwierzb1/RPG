@@ -19,7 +19,7 @@ namespace cppproperties {
 		* Writes Properties object to a file.
 		*/
 		static void Write(const std::string& file, const Properties& props);
-		static std::vector<std::string> Split(const std::string &s, char delim);
+		static std::vector<std::string> Split(const std::string &s, char delim[]);
 	};
 
 } /* namespace cppproperties */
