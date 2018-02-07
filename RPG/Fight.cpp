@@ -246,5 +246,4 @@ Fight::~Fight()
 		SDL_FreeSurface(surfaceMessage[i]);
 		SDL_DestroyTexture(Message[i]);
 	}
-
 }
