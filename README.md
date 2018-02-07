@@ -1,3 +1,2 @@
 # RPG
-Images used are not mine, I have found them on Google Search. 
-They will not be used for commercial purposes.
+Images used are not mine, that's why they are not on repository.
