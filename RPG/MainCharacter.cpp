@@ -6,13 +6,8 @@ MainCharacter::MainCharacter(SDL_Renderer *passedRenderer, std::string FilePath,
 	strength = 15;
 	key = idle;
 	//sdlSetup = passedSDL;
-	
 	timeCheck = SDL_GetTicks();
-	
-	
 	speed = 3;
-
-	
 	beginX = (WINDOW_WIDTH ) / 2;
 	beginY = (WINDOW_HEIGHT) / 2;
 	isAttacking = false;
@@ -26,12 +21,9 @@ void MainCharacter::Update(Environment *environment)
 	scanKeys();
 	moveCharacter();
 	CheckCollision(environment);
-	//back to idle key state
-	//key = idle;
 	//update location of character
 	x = *cameraX + beginX;
 	y = -*cameraY + beginY;
-
 	//std::cout << "X" << *cameraX << std::endl;
 	//std::cout << "Y" << *cameraY << std::endl;
 }
@@ -115,8 +107,6 @@ void MainCharacter::moveCharacter()
 			default:
 				break;
 		}
-		
-		
 		/*if (*cameraX < 0)
 			*cameraX = 0;
 		if (*cameraY > 0)
