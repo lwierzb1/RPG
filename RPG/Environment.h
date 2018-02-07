@@ -11,7 +11,7 @@
 class Environment
 {
 public:
-	Environment(SDL_setup *sdlsetup, int screenWidth, int screenHeight, int *cameraX, int *cameraY);
+	Environment(SDL_setup *sdlSetup, int screenWidth, int screenHeight, int *cameraX, int *cameraY);
 	~Environment();
 	void drawBack();
 	void drawFront(int characterY);
@@ -29,7 +29,7 @@ private:
 	int *cameraY;
 	Sprite *arena;
 	Sprite *grass[COLUMNS_GRASS][ROWS_GRASS];
-	SDL_setup *sdlsetup;
+	SDL_setup *sdlSetup;
 
 	enum gameMode {
 		gamePlay,

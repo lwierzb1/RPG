@@ -4,18 +4,18 @@
 using namespace cppproperties;
 
 
-Environment::Environment(SDL_setup *sdlsetup, int screenWidth, int screenHeight, int *cameraX, int *cameraY)
+Environment::Environment(SDL_setup *sdlSetup, int screenWidth, int screenHeight, int *cameraX, int *cameraY)
 {
-	this->sdlsetup = sdlsetup;
+	this->sdlSetup = sdlSetup;
 	for (int i = 0; i < COLUMNS_GRASS; i++)
 		for (int j = 0; j < ROWS_GRASS; j++)
-			grass[i][j] = new Sprite(sdlsetup->getRenderer(), "data/environment/grass.png", screenWidth * i, screenHeight * j, screenWidth, screenHeight, cameraX, cameraY, CollisionRectangle(0, 0, 0, 0));
+			grass[i][j] = new Sprite(sdlSetup->getRenderer(), "data/environment/grass.png", screenWidth * i, screenHeight * j, screenWidth, screenHeight, cameraX, cameraY, CollisionRectangle(0, 0, 0, 0));
 	
 	this->cameraX = cameraX;
 	this->cameraY = cameraY;
 	keyPressed = true;
 	
-	arena = new Sprite(sdlsetup->getRenderer(), "data/environment/forestArena.png", 0, 0, screenWidth, screenHeight, CollisionRectangle());
+	arena = new Sprite(sdlSetup->getRenderer(), "data/environment/forestArena.png", 0, 0, screenWidth, screenHeight, CollisionRectangle());
 	mode = gamePlay;
 	loadFromFile();
 }
@@ -69,7 +69,7 @@ void Environment::loadFromFile()
 		else
 			tempX = std::stoi((*i)); // first,third,fifth... is X
 		if (iteration % 2 != 0 && iteration != 0) //every two iteration create tree
-			trees.push_back(new Tree(sdlsetup, tempX, tempY, cameraX, cameraY));
+			trees.push_back(new Tree(sdlSetup, tempX, tempY, cameraX, cameraY));
 		iteration++;
 	}
 
@@ -80,35 +80,35 @@ void Environment::update()
 {
 	if (mode == levelCreation)
 	{
-		if (sdlsetup->getMainEvent()->type == SDL_KEYDOWN)
+		if (sdlSetup->getMainEvent()->type == SDL_KEYDOWN)
 		{
-			if (!keyPressed && sdlsetup->getMainEvent()->key.keysym.sym == SDLK_F11)
+			if (!keyPressed && sdlSetup->getMainEvent()->key.keysym.sym == SDLK_F11)
 			{
 				saveToFile();
 				keyPressed = true;
 			}
 		}
-		if (sdlsetup->getMainEvent()->type == SDL_KEYUP)
+		if (sdlSetup->getMainEvent()->type == SDL_KEYUP)
 		{
-			if (keyPressed && sdlsetup->getMainEvent()->key.keysym.sym == SDLK_F11)
+			if (keyPressed && sdlSetup->getMainEvent()->key.keysym.sym == SDLK_F11)
 				keyPressed = false;
 		}
-		if (sdlsetup->getMainEvent()->type == SDL_KEYDOWN)
+		if (sdlSetup->getMainEvent()->type == SDL_KEYDOWN)
 		{
-			if (!keyPressed && sdlsetup->getMainEvent()->key.keysym.sym == SDLK_F1)
+			if (!keyPressed && sdlSetup->getMainEvent()->key.keysym.sym == SDLK_F1)
 			{
-				trees.push_back(new Tree(sdlsetup, *cameraX + 100 + (WINDOW_WIDTH) / 2 ,-*cameraY + 100 + (WINDOW_HEIGHT) / 2 , cameraX, cameraY));
+				trees.push_back(new Tree(sdlSetup, *cameraX + 100 + (WINDOW_WIDTH) / 2 ,-*cameraY + 100 + (WINDOW_HEIGHT) / 2 , cameraX, cameraY));
 				keyPressed = true;
 			}
 		}
-		if (sdlsetup->getMainEvent()->type == SDL_KEYUP)
+		if (sdlSetup->getMainEvent()->type == SDL_KEYUP)
 		{
-			if (keyPressed && sdlsetup->getMainEvent()->key.keysym.sym == SDLK_F1)
+			if (keyPressed && sdlSetup->getMainEvent()->key.keysym.sym == SDLK_F1)
 				keyPressed = false;
 		}
-		if (sdlsetup->getMainEvent()->type == SDL_KEYDOWN)
+		if (sdlSetup->getMainEvent()->type == SDL_KEYDOWN)
 		{
-			if (!keyPressed && sdlsetup->getMainEvent()->key.keysym.sym == SDLK_F2)
+			if (!keyPressed && sdlSetup->getMainEvent()->key.keysym.sym == SDLK_F2)
 			{
 				if (trees.size() > 0)
 				{
@@ -118,15 +118,15 @@ void Environment::update()
 				keyPressed = true;
 			}
 		}
-		if (sdlsetup->getMainEvent()->type == SDL_KEYUP)
+		if (sdlSetup->getMainEvent()->type == SDL_KEYUP)
 		{
-			if (keyPressed && sdlsetup->getMainEvent()->key.keysym.sym == SDLK_F2)
+			if (keyPressed && sdlSetup->getMainEvent()->key.keysym.sym == SDLK_F2)
 				keyPressed = false;
 		}
 	}
-	if (sdlsetup->getMainEvent()->type == SDL_KEYDOWN)
+	if (sdlSetup->getMainEvent()->type == SDL_KEYDOWN)
 	{
-		if (!keyPressed && sdlsetup->getMainEvent()->key.keysym.sym == SDLK_F12)
+		if (!keyPressed && sdlSetup->getMainEvent()->key.keysym.sym == SDLK_F12)
 		{
 			if (mode == levelCreation)
 			{
@@ -141,9 +141,9 @@ void Environment::update()
 			keyPressed = true;
 		}
 	}
-	if (sdlsetup->getMainEvent()->type == SDL_KEYUP)
+	if (sdlSetup->getMainEvent()->type == SDL_KEYUP)
 	{
-		if (keyPressed && sdlsetup->getMainEvent()->key.keysym.sym == SDLK_F12)
+		if (keyPressed && sdlSetup->getMainEvent()->key.keysym.sym == SDLK_F12)
 			keyPressed = false;
 	}
 }

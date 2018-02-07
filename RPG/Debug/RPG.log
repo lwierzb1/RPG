@@ -1,2 +1,14 @@
-﻿  Sprite.cpp
+﻿  Tree.cpp
+c:\users\lukasz\desktop\game\rpg\rpg\tree.cpp(12): warning C4244: "argument": konwersja z "double" do "int", możliwa utrata danych
+c:\users\lukasz\desktop\game\rpg\rpg\tree.cpp(13): warning C4244: "argument": konwersja z "double" do "int", możliwa utrata danych
+  Sprite.cpp
+  MainCharacter.cpp
+c:\users\lukasz\desktop\game\rpg\rpg\maincharacter.cpp(36): warning C4018: "<": niezgodność typu ze znakiem/bez znaku
+  Fight.cpp
+  Environment.cpp
+  Character.cpp
+  Generowanie kodu...
+  Pomijanie... (nie wykryto odpowiednich zmian)
+  RPG.cpp
+  Main.cpp
   RPG.vcxproj -> C:\Users\Lukasz\Desktop\Game\RPG\Debug\RPG.exe

@@ -36,7 +36,7 @@ public:
 	void setAmountOfYFrames(int yFrames);
 	int getAmountOfXFrames();
 	int getAmountOfYFrames();
-	void prepareToFight(std::string Path, int amountOfXFrames, int amountOfYFrames, int x, int y, int w, int h);
+	void changeImage(std::string Path, int amountOfXFrames, int amountOfYFrames, int x, int y, int w, int h);
 private:
 	SDL_Texture *image;
 	SDL_Texture *collisionImage;

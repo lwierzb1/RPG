@@ -9,13 +9,16 @@
 class Fight 
 {
 public:
-	Fight(SDL_setup *sdlsetup, MainCharacter *mainCharacter, Character *enemyCharacter, Environment *environment);
+	Fight(SDL_setup *sdlSetup, MainCharacter *mainCharacter, Character *enemyCharacter, Environment *environment);
 	~Fight();
 	bool fightLoop();
 	void configFightMenu();
 	void updateFightMenu();
 	void giveExperienceToMainCharacter();
 	void performAttack(Character *aggressor, Character *victim);
+	void performDefence(Character *defencer, int extraDefence);
+	void drawBattleMessages();
+	void viewFightResult(Character *winner);
 private:
 	const Uint8 *keyboardState;
 	//The font that's going to be used 
@@ -24,8 +27,10 @@ private:
 	SDL_Color White = { 255, 255, 255 };
 	SDL_Color RED = { 255, 0, 0 };
 	SDL_Surface* surfaceMessage[5];
-	SDL_Texture* Message[5];
-	SDL_Rect Message_rect[5];
+	SDL_Texture* battleMessage[5];
+	SDL_Rect battleMessageRect[5];
+	int amountOfMenuRects;
+	int amountOfAllBattleRects;
 	std::string playerHp;
 	std::string enemyHp;
 	std::string availableActions[3] = { "Attack", "Defence", "Flee" };
@@ -37,7 +42,7 @@ private:
 	} ;
 	CurrentAction currentAction;
 	bool quit;
-	SDL_setup *sdlsetup;
+	SDL_setup *sdlSetup;
 	MainCharacter *character;
 	Character *enemy;
 	Environment *forestArea;

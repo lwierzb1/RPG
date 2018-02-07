@@ -85,7 +85,7 @@ void Sprite::setAmountOfYFrames(int yFrames)
 {
 	amountOfYFrames = yFrames;
 }
-void Sprite::prepareToFight(std::string Path, int amountOfXFrames, int amountOfYFrames, int x, int y, int w, int h)
+void Sprite::changeImage(std::string Path, int amountOfXFrames, int amountOfYFrames, int x, int y, int w, int h)
 {
 
 	this->x = x;
@@ -103,7 +103,7 @@ void Sprite::setPicture(std::string Path, int amountOfXFrames, int amountOfYFram
 
 	if (image == NULL)
 	{
-		std::cout << ("Unable to load image %s! SDL Error: %s\n", "f/f1.bmp", SDL_GetError());
+		std::cout << ("Unable to load image %s! SDL Error: %s\n", Path.c_str(), SDL_GetError());
 	}
 	rect.x = x;
 	rect.y = y;

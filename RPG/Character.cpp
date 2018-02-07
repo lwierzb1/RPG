@@ -6,7 +6,7 @@ Character::Character(SDL_Renderer *passedRenderer, std::string FilePath, int x, 
 	:Sprite(passedRenderer, FilePath, x, y, w, h, passedCameraX, passedCameraY, amountOfXFrames, amountOfYFrames, passedCollisonRect)
 {
 	isAttacking = false;
-	strength = 10;
+	strength = 210;
 	defence = 5;
 	health = 100;
 	mayAttack = false;

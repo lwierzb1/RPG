@@ -5,7 +5,7 @@ MainCharacter::MainCharacter(SDL_Renderer *passedRenderer, std::string FilePath,
 {
 	strength = 15;
 	key = idle;
-	//sdlsetup = passedSDL;
+	//sdlSetup = passedSDL;
 	timeCheck = SDL_GetTicks();
 	speed = 3;
 	beginX = (WINDOW_WIDTH ) / 2;

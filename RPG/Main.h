@@ -25,7 +25,7 @@ private:
 	int cameraY;
 protected:
 	bool quit;
-	SDL_setup *sdlsetup;
+	SDL_setup *sdlSetup;
 	MainCharacter *character;
 	Character *enemy;
 	Environment *forestArea;

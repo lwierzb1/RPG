@@ -12,7 +12,7 @@ private:
 	void moveCharacter();
 	void CheckCollision(Environment *environment);
 	//sdl and timing
-	SDL_setup *sdlsetup;
+	SDL_setup *sdlSetup;
 	
 	int beginX;
 	int beginY;

@@ -4,7 +4,7 @@
 class Tree
 {
 public:
-	Tree(SDL_setup *sdlsetup, int x, int y, int *cameraX, int *cameraY);
+	Tree(SDL_setup *sdlSetup, int x, int y, int *cameraX, int *cameraY);
 	~Tree();
 	void drawTree();
 	int getX();
