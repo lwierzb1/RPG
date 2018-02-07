@@ -1,6 +1,6 @@
 #pragma once
 #include "stdafx.h"
-#include "SDL_Setup.h"
+#include "SDL_setup.h"
 #include <SDL_ttf.h>
 #include "Sprite.h"
 #include "MainCharacter.h"
@@ -9,13 +9,13 @@
 class Fight 
 {
 public:
-	Fight(SDL_Setup *sdlSetup, MainCharacter *mainCharacter, Character *enemyCharacter, Environment *environment);
+	Fight(SDL_setup *sdlsetup, MainCharacter *mainCharacter, Character *enemyCharacter, Environment *environment);
 	~Fight();
-	bool FightLoop();
-	void ConfigFightMenu();
-	void UpdateFightMenu();
-	void GiveExperienceToMainCharacter();
-	void PerformAttack(Character *aggressor, Character *victim);
+	bool fightLoop();
+	void configFightMenu();
+	void updateFightMenu();
+	void giveExperienceToMainCharacter();
+	void performAttack(Character *aggressor, Character *victim);
 private:
 	const Uint8 *keyboardState;
 	//The font that's going to be used 
@@ -31,13 +31,13 @@ private:
 	std::string availableActions[3] = { "Attack", "Defence", "Flee" };
 	int currentOption = 0;
 	enum CurrentAction {
-		attack,
-		defence ,
-		flee
+		ATTACK,
+		DEFENCE ,
+		FLEE
 	} ;
 	CurrentAction currentAction;
 	bool quit;
-	SDL_Setup *sdlSetup;
+	SDL_setup *sdlsetup;
 	MainCharacter *character;
 	Character *enemy;
 	Environment *forestArea;

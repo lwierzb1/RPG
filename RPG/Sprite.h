@@ -10,33 +10,33 @@ public:
 	Sprite();
 	~Sprite();
 
-	void Draw();
+	void draw();
 
-	void DrawStady();
-	virtual void SetX(int x);
-	void SetY(int y);
-	void SetPosition(int x, int y);
+	void drawStady();
+	virtual void setX(int x);
+	void setY(int y);
+	void setPosition(int x, int y);
 
-	int GetWidth();
-	int GetHeight();
-	void SetWidthCrop(int w);
-	void SetHeightCrop(int h);
-	void SetCurrentFrame(int frame);
+	int getWidth();
+	int getHeight();
+	void setWidthCrop(int w);
+	void setHeightCrop(int h);
+	void setCurrentFrame(int frame);
 
-	int GetImageWidth();
-	int GetImageHeight();
-	int PlayAnimation(int beginFrame, int endFrame, int row, int speed);
+	int getImageWidth();
+	int getImageHeight();
+	int playAnimation(int beginFrame, int endFrame, int row, int speed);
 	
-	bool IsColiding(CollisionRectangle theColider);
-	CollisionRectangle GetCollisonRect();
-	SDL_Rect GetRect();
-	void SetPicture(std::string Path, int amountOfXFrames, int amountOfYFrames);
-	SDL_Texture* GetImageTexture();
-	void SetAmountOfXFrames(int xFrames);
-	void SetAmountOfYFrames(int yFrames);
-	int GetAmountOfXFrames();
-	int GetAmountOfYFrames();
-	void PrepareToFight(std::string Path, int amountOfXFrames, int amountOfYFrames, int x, int y, int w, int h);
+	bool isColiding(CollisionRectangle theColider);
+	CollisionRectangle getCollisonRect();
+	SDL_Rect getRect();
+	void setPicture(std::string Path, int amountOfXFrames, int amountOfYFrames);
+	SDL_Texture* getImagetexture();
+	void setAmountOfXFrames(int xFrames);
+	void setAmountOfYFrames(int yFrames);
+	int getAmountOfXFrames();
+	int getAmountOfYFrames();
+	void prepareToFight(std::string Path, int amountOfXFrames, int amountOfYFrames, int x, int y, int w, int h);
 private:
 	SDL_Texture *image;
 	SDL_Texture *collisionImage;

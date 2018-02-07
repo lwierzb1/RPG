@@ -2,7 +2,7 @@
 #include "Character.h"
 
 
-Character::Character(SDL_Renderer *passedRenderer, std::string FilePath, int x, int y, int w, int h, int *passedCameraX, int *passedCameraY, int amountOfXFrames, int amountOfYFrames, CollisionRectangle passedCollisonRect, SDL_Setup *passedSDL)
+Character::Character(SDL_Renderer *passedRenderer, std::string FilePath, int x, int y, int w, int h, int *passedCameraX, int *passedCameraY, int amountOfXFrames, int amountOfYFrames, CollisionRectangle passedCollisonRect, SDL_setup *passedSDL)
 	:Sprite(passedRenderer, FilePath, x, y, w, h, passedCameraX, passedCameraY, amountOfXFrames, amountOfYFrames, passedCollisonRect)
 {
 	isAttacking = false;
@@ -11,39 +11,39 @@ Character::Character(SDL_Renderer *passedRenderer, std::string FilePath, int x, 
 	health = 100;
 	mayAttack = false;
 }
-void Character::SetX(int x)
+void Character::setX(int x)
 {
 	this->x = x;
 }
-void Character::SetY(int y)
+void Character::setY(int y)
 {
 	this->y = y;
 }
-int Character::GetX()
+int Character::getX()
 {
 	return x;
 }
-int Character::GetY()
+int Character::getY()
 {
 	return y;
 }
-int Character::GetHealth()
+int Character::getHealth()
 {
 	return health;
 }
-int Character::GetStrength()
+int Character::getStrength()
 {
 	return strength;
 }
-int Character::GetDefence()
+int Character::getDefence()
 {
 	return defence;
 }
-void Character::SetDefence(int def)
+void Character::setDefence(int def)
 {
 	defence = def;
 }
-void Character::SetHealth(int hp)
+void Character::setHealth(int hp)
 {
 	health = hp;
 }

@@ -1,16 +1,16 @@
 #pragma once
-#include "SDL_Setup.h"
+#include "SDL_setup.h"
 #include "Sprite.h"
 class Tree
 {
 public:
-	Tree(SDL_Setup *sdlSetup, int x, int y, int *cameraX, int *cameraY);
+	Tree(SDL_setup *sdlsetup, int x, int y, int *cameraX, int *cameraY);
 	~Tree();
-	void DrawTree();
-	int GetX();
-	int GetY();
-	Sprite* GetTrunk();
-	Sprite* GetBranch();
+	void drawTree();
+	int getX();
+	int getY();
+	Sprite* getTrunk();
+	Sprite* getBranch();
 private:
 	int x;
 	int y;

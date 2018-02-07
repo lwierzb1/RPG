@@ -1,22 +1,22 @@
 #include "MainCharacter.h"
 
-MainCharacter::MainCharacter(SDL_Renderer *passedRenderer, std::string FilePath, int x, int y, int w, int h, int *passedCameraX, int *passedCameraY, int amountOfXFrames, int amountOfYFrames, CollisionRectangle passedCollisonRect, SDL_Setup *passedSDL)
+MainCharacter::MainCharacter(SDL_Renderer *passedRenderer, std::string FilePath, int x, int y, int w, int h, int *passedCameraX, int *passedCameraY, int amountOfXFrames, int amountOfYFrames, CollisionRectangle passedCollisonRect, SDL_setup *passedSDL)
 	:Character(passedRenderer,FilePath,x,y,w,h,passedCameraX,passedCameraY, amountOfXFrames, amountOfYFrames, passedCollisonRect,passedSDL)
 {
 	strength = 15;
 	key = idle;
-	//sdlSetup = passedSDL;
+	//sdlsetup = passedSDL;
 	timeCheck = SDL_GetTicks();
 	speed = 3;
 	beginX = (WINDOW_WIDTH ) / 2;
 	beginY = (WINDOW_HEIGHT) / 2;
 	isAttacking = false;
 	mayAttack = true;
-	SetHeightCrop(GetImageHeight() / AMOUNT_OF_ROWS_CHAR);
-	SetWidthCrop(GetImageWidth() / AMOUNT_OF_COLUMNS_CHAR);
+	setHeightCrop(getImageHeight() / AMOUNT_OF_ROWS_CHAR);
+	setWidthCrop(getImageWidth() / AMOUNT_OF_COLUMNS_CHAR);
 	keyboardState = SDL_GetKeyboardState(NULL);
 }
-void MainCharacter::Update(Environment *environment)
+void MainCharacter::update(Environment *environment)
 {
 	scanKeys();
 	moveCharacter();
@@ -33,11 +33,11 @@ void MainCharacter::ResetKeyState()
 }
 void MainCharacter::CheckCollision(Environment *environment)
 {
-	for (int i = 0; i < environment->GetTrees().size(); i++)
-		if (IsColiding(environment->GetTrees()[i]->GetTrunk()->GetCollisonRect()))
-			BrushAsideCharacter(10);
+	for (int i = 0; i < environment->getTrees().size(); i++)
+		if (isColiding(environment->getTrees()[i]->getTrunk()->getCollisonRect()))
+			brushAsideCharacter(10);
 }
-void MainCharacter::BrushAsideCharacter(int epsilon)
+void MainCharacter::brushAsideCharacter(int epsilon)
 {
 	switch (key)
 	{
@@ -57,9 +57,9 @@ void MainCharacter::BrushAsideCharacter(int epsilon)
 			break;
 	}
 }
-bool MainCharacter::CheckIfEnemyIsColidingCharacter(Character *enemyCharacter)
+bool MainCharacter::checkIfEnemyisColidingCharacter(Character *enemyCharacter)
 {
-	if (IsColiding(enemyCharacter->GetCollisonRect()))
+	if (isColiding(enemyCharacter->getCollisonRect()))
 		return true;
 	else
 		return false;
@@ -68,22 +68,22 @@ void MainCharacter::scanKeys()
 {
 	if (keyboardState[SDL_SCANCODE_W])
 	{
-		PlayAnimation(1, 5, GO_UP, 150);
+		playAnimation(1, 5, GO_UP, 150);
 		key = moveUp;
 	}
 	else if (keyboardState[SDL_SCANCODE_S])
 	{
-		PlayAnimation(1, 5, GO_DOWN, 150);
+		playAnimation(1, 5, GO_DOWN, 150);
 		key = moveDown;
 	}
 	else if (keyboardState[SDL_SCANCODE_A])
 	{
-		PlayAnimation(1, 5, GO_LEFT, 150);
+		playAnimation(1, 5, GO_LEFT, 150);
 		key = moveLeft;
 	}
 	else if (keyboardState[SDL_SCANCODE_D])
 	{
-		PlayAnimation(1, 5, GO_RIGHT, 150);
+		playAnimation(1, 5, GO_RIGHT, 150);
 		key = moveRight;
 	}
 }
@@ -115,11 +115,11 @@ void MainCharacter::moveCharacter()
 		timeCheck = SDL_GetTicks();
 	}
 }
-void MainCharacter::SetExperience(int exp)
+void MainCharacter::setExperience(int exp)
 {
 	experience = exp;
 }
-int MainCharacter::GetExperience()
+int MainCharacter::getExperience()
 {
 	return experience;
 }

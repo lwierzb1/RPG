@@ -4,56 +4,56 @@
 using namespace cppproperties;
 
 
-Environment::Environment(SDL_Setup *sdlSetup, int screenWidth, int screenHeight, int *cameraX, int *cameraY)
+Environment::Environment(SDL_setup *sdlsetup, int screenWidth, int screenHeight, int *cameraX, int *cameraY)
 {
-	this->sdlSetup = sdlSetup;
+	this->sdlsetup = sdlsetup;
 	for (int i = 0; i < COLUMNS_GRASS; i++)
 		for (int j = 0; j < ROWS_GRASS; j++)
-			grass[i][j] = new Sprite(sdlSetup->GetRenderer(), "data/environment/grass.png", screenWidth * i, screenHeight * j, screenWidth, screenHeight, cameraX, cameraY, CollisionRectangle(0, 0, 0, 0));
+			grass[i][j] = new Sprite(sdlsetup->getRenderer(), "data/environment/grass.png", screenWidth * i, screenHeight * j, screenWidth, screenHeight, cameraX, cameraY, CollisionRectangle(0, 0, 0, 0));
 	
 	this->cameraX = cameraX;
 	this->cameraY = cameraY;
 	keyPressed = true;
 	
-	arena = new Sprite(sdlSetup->GetRenderer(), "data/environment/forestArena.png", 0, 0, screenWidth, screenHeight, CollisionRectangle());
+	arena = new Sprite(sdlsetup->getRenderer(), "data/environment/forestArena.png", 0, 0, screenWidth, screenHeight, CollisionRectangle());
 	mode = gamePlay;
-	LoadFromFile();
+	loadFromFile();
 }
-void Environment::DrawBack()
+void Environment::drawBack()
 {
 	for (int i = 0; i < COLUMNS_GRASS; i++)
 		for (int j = 0; j < ROWS_GRASS; j++)
-			grass[i][j]->Draw();
+			grass[i][j]->draw();
 	for (std::vector<Tree*>::iterator i = trees.begin(); i != trees.end(); ++i)
-			(*i)->DrawTree();
+			(*i)->drawTree();
 }
-void Environment::DrawFront(int characterY)
+void Environment::drawFront(int characterY)
 {
 	for (std::vector<Tree*>::iterator i = trees.begin(); i != trees.end(); ++i)
 	{
-		if ((*i)->GetY() >= characterY)
-			(*i)->DrawTree();
+		if ((*i)->getY() >= characterY)
+			(*i)->drawTree();
 	}
 }
-void Environment::SaveToFile()
+void Environment::saveToFile()
 {
 	std::string treesPosition = "";
 	
 	Properties properties;
 	
 	for (std::vector<Tree*>::iterator i = trees.begin(); i != trees.end(); ++i)
-		treesPosition += std::to_string((*i)->GetX()) + "$" + std::to_string((*i)->GetY()) + "$";
+		treesPosition += std::to_string((*i)->getX()) + "$" + std::to_string((*i)->getY()) + "$";
 	
 	properties.AddProperty("Trees", treesPosition);
 	PropertiesParser::Write("Map.properties", properties);
 	
 	std::cout << "Level saved!" << std::endl;
 }
-void Environment::LoadFromFile()
+void Environment::loadFromFile()
 {
 	Properties properties = PropertiesParser::Read("Map.properties");
 	std::vector<std::string> tree;
-	std::string line = properties.GetProperty("Trees");
+	std::string line = properties.getProperty("Trees");
 	
 	tree = PropertiesParser::Split(line, '$');
 	//current number of iteration
@@ -69,46 +69,46 @@ void Environment::LoadFromFile()
 		else
 			tempX = std::stoi((*i)); // first,third,fifth... is X
 		if (iteration % 2 != 0 && iteration != 0) //every two iteration create tree
-			trees.push_back(new Tree(sdlSetup, tempX, tempY, cameraX, cameraY));
+			trees.push_back(new Tree(sdlsetup, tempX, tempY, cameraX, cameraY));
 		iteration++;
 	}
 
 	std::cout << "Level loaded!" << std::endl;
 	std::cout << line << std::endl;
 }
-void Environment::Update()
+void Environment::update()
 {
 	if (mode == levelCreation)
 	{
-		if (sdlSetup->GetMainEvent()->type == SDL_KEYDOWN)
+		if (sdlsetup->getMainEvent()->type == SDL_KEYDOWN)
 		{
-			if (!keyPressed && sdlSetup->GetMainEvent()->key.keysym.sym == SDLK_F11)
+			if (!keyPressed && sdlsetup->getMainEvent()->key.keysym.sym == SDLK_F11)
 			{
-				SaveToFile();
+				saveToFile();
 				keyPressed = true;
 			}
 		}
-		if (sdlSetup->GetMainEvent()->type == SDL_KEYUP)
+		if (sdlsetup->getMainEvent()->type == SDL_KEYUP)
 		{
-			if (keyPressed && sdlSetup->GetMainEvent()->key.keysym.sym == SDLK_F11)
+			if (keyPressed && sdlsetup->getMainEvent()->key.keysym.sym == SDLK_F11)
 				keyPressed = false;
 		}
-		if (sdlSetup->GetMainEvent()->type == SDL_KEYDOWN)
+		if (sdlsetup->getMainEvent()->type == SDL_KEYDOWN)
 		{
-			if (!keyPressed && sdlSetup->GetMainEvent()->key.keysym.sym == SDLK_F1)
+			if (!keyPressed && sdlsetup->getMainEvent()->key.keysym.sym == SDLK_F1)
 			{
-				trees.push_back(new Tree(sdlSetup, *cameraX + 100 + (WINDOW_WIDTH) / 2 ,-*cameraY + 100 + (WINDOW_HEIGHT) / 2 , cameraX, cameraY));
+				trees.push_back(new Tree(sdlsetup, *cameraX + 100 + (WINDOW_WIDTH) / 2 ,-*cameraY + 100 + (WINDOW_HEIGHT) / 2 , cameraX, cameraY));
 				keyPressed = true;
 			}
 		}
-		if (sdlSetup->GetMainEvent()->type == SDL_KEYUP)
+		if (sdlsetup->getMainEvent()->type == SDL_KEYUP)
 		{
-			if (keyPressed && sdlSetup->GetMainEvent()->key.keysym.sym == SDLK_F1)
+			if (keyPressed && sdlsetup->getMainEvent()->key.keysym.sym == SDLK_F1)
 				keyPressed = false;
 		}
-		if (sdlSetup->GetMainEvent()->type == SDL_KEYDOWN)
+		if (sdlsetup->getMainEvent()->type == SDL_KEYDOWN)
 		{
-			if (!keyPressed && sdlSetup->GetMainEvent()->key.keysym.sym == SDLK_F2)
+			if (!keyPressed && sdlsetup->getMainEvent()->key.keysym.sym == SDLK_F2)
 			{
 				if (trees.size() > 0)
 				{
@@ -118,15 +118,15 @@ void Environment::Update()
 				keyPressed = true;
 			}
 		}
-		if (sdlSetup->GetMainEvent()->type == SDL_KEYUP)
+		if (sdlsetup->getMainEvent()->type == SDL_KEYUP)
 		{
-			if (keyPressed && sdlSetup->GetMainEvent()->key.keysym.sym == SDLK_F2)
+			if (keyPressed && sdlsetup->getMainEvent()->key.keysym.sym == SDLK_F2)
 				keyPressed = false;
 		}
 	}
-	if (sdlSetup->GetMainEvent()->type == SDL_KEYDOWN)
+	if (sdlsetup->getMainEvent()->type == SDL_KEYDOWN)
 	{
-		if (!keyPressed && sdlSetup->GetMainEvent()->key.keysym.sym == SDLK_F12)
+		if (!keyPressed && sdlsetup->getMainEvent()->key.keysym.sym == SDLK_F12)
 		{
 			if (mode == levelCreation)
 			{
@@ -141,19 +141,19 @@ void Environment::Update()
 			keyPressed = true;
 		}
 	}
-	if (sdlSetup->GetMainEvent()->type == SDL_KEYUP)
+	if (sdlsetup->getMainEvent()->type == SDL_KEYUP)
 	{
-		if (keyPressed && sdlSetup->GetMainEvent()->key.keysym.sym == SDLK_F12)
+		if (keyPressed && sdlsetup->getMainEvent()->key.keysym.sym == SDLK_F12)
 			keyPressed = false;
 	}
 }
-std::vector<Tree*> Environment::GetTrees()
+std::vector<Tree*> Environment::getTrees()
 {
 	return trees;
 }
-void Environment::DrawArena()
+void Environment::drawArena()
 {
-	arena->DrawStady();
+	arena->drawStady();
 }
 Environment::~Environment()
 {

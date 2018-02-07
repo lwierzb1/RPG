@@ -1,7 +1,7 @@
 #pragma once
 #include "Sprite.h"
 #include "stdafx.h"
-#include "SDL_Setup.h"
+#include "SDL_setup.h"
 #include "Tree.h"
 #include <vector>
 #include <fstream>
@@ -11,15 +11,15 @@
 class Environment
 {
 public:
-	Environment(SDL_Setup *sdlSetup, int screenWidth, int screenHeight, int *cameraX, int *cameraY);
+	Environment(SDL_setup *sdlsetup, int screenWidth, int screenHeight, int *cameraX, int *cameraY);
 	~Environment();
-	void DrawBack();
-	void DrawFront(int characterY);
-	void DrawArena();
-	void Update();
-	void SaveToFile();
-	void LoadFromFile();
-	std::vector<Tree*> GetTrees();
+	void drawBack();
+	void drawFront(int characterY);
+	void drawArena();
+	void update();
+	void saveToFile();
+	void loadFromFile();
+	std::vector<Tree*> getTrees();
 private:
 	std::vector<Tree*> trees;
 
@@ -29,7 +29,7 @@ private:
 	int *cameraY;
 	Sprite *arena;
 	Sprite *grass[COLUMNS_GRASS][ROWS_GRASS];
-	SDL_Setup *sdlSetup;
+	SDL_setup *sdlsetup;
 
 	enum gameMode {
 		gamePlay,

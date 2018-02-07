@@ -10,7 +10,7 @@ namespace cppproperties {
 	Properties::~Properties() {
 	}
 
-	std::string Properties::GetProperty(const std::string& key) const {
+	std::string Properties::getProperty(const std::string& key) const {
 		if (properties.find(key) == properties.end()) {
 			std::string msg = key + " does not exist";
 			throw PropertyNotFoundException(msg.c_str());
@@ -18,14 +18,14 @@ namespace cppproperties {
 		return properties.at(key);
 	}
 
-	std::string Properties::GetProperty(const std::string& key, const std::string& defaultValue) const {
+	std::string Properties::getProperty(const std::string& key, const std::string& defaultValue) const {
 		if (properties.find(key) == properties.end()) {
 			return defaultValue;
 		}
 		return properties.at(key);
 	}
 
-	std::vector<std::string> Properties::GetPropertyNames() const {
+	std::vector<std::string> Properties::getPropertyNames() const {
 		return keys;
 	}
 

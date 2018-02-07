@@ -25,7 +25,7 @@ namespace cppproperties {
 		try {
 			std::string line;
 			while (getline(is, line)) {
-				if (PropertiesUtils::IsEmptyLine(line) || PropertiesUtils::IsComment(line)) {
+				if (PropertiesUtils::IsEmptyLine(line) || PropertiesUtils::isComment(line)) {
 					// ignore it
 				}
 				else if (PropertiesUtils::IsProperty(line)) {
@@ -70,17 +70,17 @@ namespace cppproperties {
 
 		try {
 			pro = Read(file);
-			std::vector<std::string> names = pro.GetPropertyNames(); //read existing keys 
+			std::vector<std::string> names = pro.getPropertyNames(); //read existing keys 
 			
-			const std::vector<std::string>& keys = props.GetPropertyNames();
+			const std::vector<std::string>& keys = props.getPropertyNames();
 			
 			for (std::vector<std::string>::const_iterator i = keys.begin(); i != keys.end(); ++i) 
-				pro.AddProperty((*i), props.GetProperty(*i)); // add/update new keys
+				pro.AddProperty((*i), props.getProperty(*i)); // add/update new keys
 			
-			names = pro.GetPropertyNames(); // update vector of keys with new elements needed for loop iteration
+			names = pro.getPropertyNames(); // update vector of keys with new elements needed for loop iteration
 			
 			for (std::vector<std::string>::const_iterator i = names.begin(); i != names.end(); ++i) 
-				os << *i << " = " << pro.GetProperty(*i) << std::endl; //print to file
+				os << *i << " = " << pro.getProperty(*i) << std::endl; //print to file
 			
 			os.close();
 		}

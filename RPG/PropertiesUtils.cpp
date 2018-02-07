@@ -60,7 +60,7 @@ namespace cppproperties {
 			return std::pair<std::string, std::string>(key, value);
 		}
 
-		bool IsComment(const std::string& str) {
+		bool isComment(const std::string& str) {
 			std::string trimmedStr = LeftTrim(str);
 			return trimmedStr[0] == '#';
 		}

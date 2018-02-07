@@ -11,7 +11,7 @@ Sprite::Sprite(SDL_Renderer *passedRenderer, std::string FilePath, int x, int y,
 	renderer = passedRenderer;
 	this->amountOfXFrames = amountOfXFrames;
 	this->amountOfYFrames = amountOfYFrames;
-	SetPicture(FilePath,this-> amountOfXFrames,this->amountOfYFrames);
+	setPicture(FilePath,this-> amountOfXFrames,this->amountOfYFrames);
 	/*collisionImage = IMG_LoadTexture(renderer, "Data/Debug/CollisionBox.png");
 	if (collisionImage == NULL)
 	{
@@ -36,7 +36,7 @@ Sprite::Sprite(SDL_Renderer *passedRenderer, std::string FilePath, int x, int y,
 	renderer = passedRenderer;
 	amountOfXFrames = 1;
 	amountOfYFrames = 1;
-	SetPicture(FilePath, amountOfXFrames, amountOfYFrames);
+	setPicture(FilePath, amountOfXFrames, amountOfYFrames);
 	currentFrame = 0;
 	/*collisionImage = IMG_LoadTexture(renderer, "Data/Debug/CollisionBox.png");
 	if (collisionImage == NULL)
@@ -63,7 +63,7 @@ Sprite::Sprite(SDL_Renderer *passedRenderer, std::string FilePath, int x, int y,
 	renderer = passedRenderer;
 	this->amountOfXFrames = amountOfXFrames;
 	this->amountOfYFrames = amountOfYFrames;
-	SetPicture(FilePath, 1, 1);
+	setPicture(FilePath, 1, 1);
 
 	/*collisionImage = IMG_LoadTexture(renderer, "Data/Debug/CollisionBox.png");
 	if (collisionImage == NULL)
@@ -77,15 +77,15 @@ Sprite::Sprite()
 {
 
 }
-void Sprite::SetAmountOfXFrames(int xFrames)
+void Sprite::setAmountOfXFrames(int xFrames)
 {
 	amountOfXFrames = xFrames;
 }
-void Sprite::SetAmountOfYFrames(int yFrames)
+void Sprite::setAmountOfYFrames(int yFrames)
 {
 	amountOfYFrames = yFrames;
 }
-void Sprite::PrepareToFight(std::string Path, int amountOfXFrames, int amountOfYFrames, int x, int y, int w, int h)
+void Sprite::prepareToFight(std::string Path, int amountOfXFrames, int amountOfYFrames, int x, int y, int w, int h)
 {
 
 	this->x = x;
@@ -94,10 +94,10 @@ void Sprite::PrepareToFight(std::string Path, int amountOfXFrames, int amountOfY
 	height = h;
 	this->amountOfXFrames = amountOfXFrames;
 	this->amountOfYFrames = amountOfYFrames;
-	SetPicture(Path, amountOfXFrames, amountOfYFrames);
+	setPicture(Path, amountOfXFrames, amountOfYFrames);
 
 }
-void Sprite::SetPicture(std::string Path, int amountOfXFrames, int amountOfYFrames)
+void Sprite::setPicture(std::string Path, int amountOfXFrames, int amountOfYFrames)
 {
 	image = IMG_LoadTexture(renderer, Path.c_str());
 
@@ -116,61 +116,61 @@ void Sprite::SetPicture(std::string Path, int amountOfXFrames, int amountOfYFram
 	crop.w = imageWidth / amountOfXFrames;
 	crop.h = imageHeight / amountOfYFrames;
 }
-SDL_Texture* Sprite::GetImageTexture()
+SDL_Texture* Sprite::getImagetexture()
 {
 	return image;
 }
-void Sprite::Draw()
+void Sprite::draw()
 {
 	Camera.x = rect.x - *cameraX;
 	Camera.y = rect.y + *cameraY;
 
-	collisonRect.SetRectangleX(rect.x - *cameraX);
-	collisonRect.SetRectangleY(rect.y + *cameraY);
+	collisonRect.setRectangleX(rect.x - *cameraX);
+	collisonRect.setRectangleY(rect.y + *cameraY);
 
 	SDL_RenderCopy(renderer, image, &crop, &Camera);
-	SDL_RenderCopy(renderer, collisionImage, NULL, &collisonRect.GetRectangle());
+	SDL_RenderCopy(renderer, collisionImage, NULL, &collisonRect.getRectangle());
 }
 
-void Sprite::DrawStady()
+void Sprite::drawStady()
 {
 	SDL_RenderCopy(renderer, image, &crop, &rect);
-	SDL_RenderCopy(renderer, collisionImage, NULL, &collisonRect.GetRectangle());
+	SDL_RenderCopy(renderer, collisionImage, NULL, &collisonRect.getRectangle());
 }
-void Sprite::SetX(int x)
+void Sprite::setX(int x)
 {
 	rect.x = x;
 }
-void Sprite::SetY(int y)
+void Sprite::setY(int y)
 {
 	rect.y = y;
 }
-void Sprite::SetHeightCrop(int h)
+void Sprite::setHeightCrop(int h)
 {
 	crop.h = h;
 }
-void Sprite::SetWidthCrop(int w)
+void Sprite::setWidthCrop(int w)
 {
 	crop.w = w;
 }
-int Sprite::GetImageHeight()
+int Sprite::getImageHeight()
 {
 	return imageHeight;
 }
-int Sprite::GetImageWidth()
+int Sprite::getImageWidth()
 {
 	return imageWidth;
 }
-void Sprite::SetPosition(int x, int y)
+void Sprite::setPosition(int x, int y)
 {
 	rect.x = x;
 	rect.y = y;
 }
-void Sprite::SetCurrentFrame(int frame)
+void Sprite::setCurrentFrame(int frame)
 {
 	currentFrame = frame;
 }
-int Sprite::PlayAnimation(int beginFrame, int endFrame, int row, int speed)
+int Sprite::playAnimation(int beginFrame, int endFrame, int row, int speed)
 {
 	
 	if (animationDelay + speed < (int)SDL_GetTicks())
@@ -190,40 +190,40 @@ int Sprite::PlayAnimation(int beginFrame, int endFrame, int row, int speed)
 	}
 	return 1;
 }
-bool Sprite::IsColiding(CollisionRectangle theColider)
+bool Sprite::isColiding(CollisionRectangle theColider)
 {
-	int x = collisonRect.GetRectangle().x;
-	int y = collisonRect.GetRectangle().y;
-	int w = collisonRect.GetRectangle().w;
-	int h = collisonRect.GetRectangle().h;
-	int coliderX = theColider.GetRectangleX();
-	int coliderY = theColider.GetRectangleY();
-	int coliderW = theColider.GetRectangle().w;
-	int coliderH = theColider.GetRectangle().h;
+	int x = collisonRect.getRectangle().x;
+	int y = collisonRect.getRectangle().y;
+	int w = collisonRect.getRectangle().w;
+	int h = collisonRect.getRectangle().h;
+	int coliderX = theColider.getRectangleX();
+	int coliderY = theColider.getRectangleY();
+	int coliderW = theColider.getRectangle().w;
+	int coliderH = theColider.getRectangle().h;
 
 	return !(x + w <= coliderX || y + h <= coliderY ||x >= coliderX + coliderW || y >= coliderY + coliderH);
 }
-int Sprite::GetAmountOfXFrames()
+int Sprite::getAmountOfXFrames()
 {
 	return amountOfXFrames;
 }
-int Sprite::GetAmountOfYFrames()
+int Sprite::getAmountOfYFrames()
 {
 	return amountOfYFrames;
 }
-int Sprite::GetWidth()
+int Sprite::getWidth()
 {
 	return width;
 }
-int Sprite::GetHeight()
+int Sprite::getHeight()
 {
 	return height;
 }
-CollisionRectangle Sprite::GetCollisonRect()
+CollisionRectangle Sprite::getCollisonRect()
 {
 	return collisonRect;
 }
-SDL_Rect Sprite::GetRect()
+SDL_Rect Sprite::getRect()
 {
 	return rect;
 }

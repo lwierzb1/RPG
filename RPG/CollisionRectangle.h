@@ -8,12 +8,12 @@ public:
 	CollisionRectangle(int x, int y, int w, int h);
 	~CollisionRectangle();
 	
-	void SetRectangle(int x, int y, int w, int h);
-	SDL_Rect GetRectangle();
-	void SetRectangleX(int x);
-	void SetRectangleY(int y);
-	int GetRectangleX();
-	int GetRectangleY();
+	void setRectangle(int x, int y, int w, int h);
+	SDL_Rect getRectangle();
+	void setRectangleX(int x);
+	void setRectangleY(int y);
+	int getRectangleX();
+	int getRectangleY();
 private:
 	int offsetX;
 	int offsetY;

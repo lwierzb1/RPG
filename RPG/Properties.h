@@ -31,22 +31,22 @@ namespace cppproperties {
 		virtual ~Properties();
 
 		/**
-		* Gets the property value from a given key.
+		* gets the property value from a given key.
 		*
 		* This method throws a PropertyNotFoundException when a given key does not
 		* exist.
 		*/
-		std::string GetProperty(const std::string& key) const;
+		std::string getProperty(const std::string& key) const;
 
 		/**
-		* Gets the property value from a given key. Use a default value if not found.
+		* gets the property value from a given key. Use a default value if not found.
 		*/
-		std::string GetProperty(const std::string& key, const std::string& defaultValue) const;
+		std::string getProperty(const std::string& key, const std::string& defaultValue) const;
 
 		/**
-		* Gets the list of property names.
+		* gets the list of property names.
 		*/
-		std::vector<std::string> GetPropertyNames() const;
+		std::vector<std::string> getPropertyNames() const;
 
 		/**
 		* Adds a new property. If the property already exists, it'll overwrite

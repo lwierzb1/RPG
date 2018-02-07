@@ -1,7 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include "Sprite.h"
-#include "SDL_Setup.h"
+#include "SDL_setup.h"
 #include "Environment.h"
 #include "CollisionRectangle.h"
 #include "Character.h"
@@ -12,7 +12,7 @@ private:
 	void moveCharacter();
 	void CheckCollision(Environment *environment);
 	//sdl and timing
-	SDL_Setup *sdlSetup;
+	SDL_setup *sdlsetup;
 	
 	int beginX;
 	int beginY;
@@ -32,13 +32,13 @@ private:
 	};
 	keys key;
 public:
-	MainCharacter(SDL_Renderer *passedRenderer, std::string FilePath, int x, int y, int w, int h, int *passedCameraX, int *passedCameraY, int amountOfXFrames, int amountOfYFrames, CollisionRectangle passedCollisonRect, SDL_Setup *passedSDL);
+	MainCharacter(SDL_Renderer *passedRenderer, std::string FilePath, int x, int y, int w, int h, int *passedCameraX, int *passedCameraY, int amountOfXFrames, int amountOfYFrames, CollisionRectangle passedCollisonRect, SDL_setup *passedSDL);
 	~MainCharacter();
-	void BrushAsideCharacter(int epsilon);
-	void Update(Environment *environment);
-	void SetExperience(int exp);
-	int GetExperience();
-	bool CheckIfEnemyIsColidingCharacter(Character *enemyCharacter);
+	void brushAsideCharacter(int epsilon);
+	void update(Environment *environment);
+	void setExperience(int exp);
+	int getExperience();
+	bool checkIfEnemyisColidingCharacter(Character *enemyCharacter);
 	void ResetKeyState();
 };
 

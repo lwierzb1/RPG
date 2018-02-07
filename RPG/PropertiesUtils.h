@@ -39,7 +39,7 @@ namespace cppproperties {
 		/**
 		* Is a given string a comment? A comment starts with #
 		*/
-		bool IsComment(const std::string& str);
+		bool isComment(const std::string& str);
 
 		/**
 		* Is a given string empty?

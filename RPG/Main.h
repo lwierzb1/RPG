@@ -1,5 +1,5 @@
 #pragma once
-#include "SDL_Setup.h"
+#include "SDL_setup.h"
 #include "Sprite.h"
 #include "MainCharacter.h"
 #include "Environment.h"
@@ -14,8 +14,8 @@ public:
 	~Main();
 
 	void GameLoop();
-	bool GetQuit();
-	void SetQuit(bool updateQuit);
+	bool getQuit();
+	void setQuit(bool updateQuit);
 	
 
 private:
@@ -25,7 +25,7 @@ private:
 	int cameraY;
 protected:
 	bool quit;
-	SDL_Setup *sdlSetup;
+	SDL_setup *sdlsetup;
 	MainCharacter *character;
 	Character *enemy;
 	Environment *forestArea;

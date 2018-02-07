@@ -5,38 +5,38 @@ CollisionRectangle::CollisionRectangle(int x, int y, int w, int h)
 {
 	offsetX = x;
 	offsetY = y;
-	SetRectangle(0, 0,w, h);
+	setRectangle(0, 0,w, h);
 }
 CollisionRectangle::CollisionRectangle() 
 {
 	offsetX = 0;
 	offsetY = 0;
-	SetRectangle(0, 0, 0, 0);
+	setRectangle(0, 0, 0, 0);
 }
-void CollisionRectangle::SetRectangle(int x, int y, int w, int h)
+void CollisionRectangle::setRectangle(int x, int y, int w, int h)
 {
 	collisionRect.x = x + offsetX;
 	collisionRect.y = y + offsetY;
 	collisionRect.w = w;
 	collisionRect.h = h;
 }
-int CollisionRectangle::GetRectangleX()
+int CollisionRectangle::getRectangleX()
 {
 	return collisionRect.x;
 }
-int CollisionRectangle::GetRectangleY()
+int CollisionRectangle::getRectangleY()
 {
 	return collisionRect.y;
 }
-void CollisionRectangle::SetRectangleX(int x)
+void CollisionRectangle::setRectangleX(int x)
 {
 	collisionRect.x = x + offsetX;
 }
-void CollisionRectangle::SetRectangleY(int y)
+void CollisionRectangle::setRectangleY(int y)
 {
 	collisionRect.y = y + offsetY;
 }
-SDL_Rect CollisionRectangle::GetRectangle()
+SDL_Rect CollisionRectangle::getRectangle()
 {
 	return collisionRect;
 }
