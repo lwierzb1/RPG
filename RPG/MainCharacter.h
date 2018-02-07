@@ -7,15 +7,6 @@
 #include "Character.h"
 class MainCharacter : public Character
 {
-public:
-	MainCharacter(SDL_Renderer *passedRenderer, std::string FilePath, int x, int y, int w, int h, int *passedCameraX, int *passedCameraY, int amountOfXFrames, int amountOfYFrames, CollisionRectangle passedCollisonRect,SDL_Setup *passedSDL);
-	~MainCharacter();
-	
-	void Update(Environment *environment);
-	void SetExperience(int exp);
-	int GetExperience();
-	bool CheckIfEnemyIsColidingCharacter(Character *enemyCharacter);
-
 private:
 	void scanKeys();
 	void moveCharacter();
@@ -40,6 +31,14 @@ private:
 		moveDown
 	};
 	keys key;
-
+public:
+	MainCharacter(SDL_Renderer *passedRenderer, std::string FilePath, int x, int y, int w, int h, int *passedCameraX, int *passedCameraY, int amountOfXFrames, int amountOfYFrames, CollisionRectangle passedCollisonRect, SDL_Setup *passedSDL);
+	~MainCharacter();
+	void BrushAsideCharacter(int epsilon);
+	void Update(Environment *environment);
+	void SetExperience(int exp);
+	int GetExperience();
+	bool CheckIfEnemyIsColidingCharacter(Character *enemyCharacter);
+	void ResetKeyState();
 };
 

@@ -26,13 +26,11 @@ Main::~Main()
 	delete character;
 	delete enemy;
 }
-
 void Main::GameLoop(void)
 {
 	while (!quit && sdlSetup->GetMainEvent()->type != SDL_QUIT)// if player dont push X
 	{
 		sdlSetup->BeginRender();
-		
 		character->Update(forestArea);
 		forestArea -> DrawBack();
 		enemy->Draw();
@@ -49,16 +47,14 @@ void Main::GameLoop(void)
 				character->SetExperience(tempMainCharacter.GetExperience());
 			else if (tempEnemy.GetHealth() > 0 && tempMainCharacter.GetHealth() > 0)
 				character->SetHealth(tempMainCharacter.GetHealth());
-			cameraX +=5;
-			//character->SetX(character->GetX()+1);
+			character->BrushAsideCharacter(5);
 		}
-		
+		character->ResetKeyState();
 		forestArea -> DrawFront(character->GetY());
 		forestArea->Update();
 		sdlSetup -> EndRender();
 	}
 }
-
 bool Main::GetQuit(void)
 {
 	return quit;

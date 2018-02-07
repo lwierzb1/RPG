@@ -27,7 +27,7 @@ void MainCharacter::Update(Environment *environment)
 	moveCharacter();
 	CheckCollision(environment);
 	//back to idle key state
-	key = idle;
+	//key = idle;
 	//update location of character
 	x = *cameraX + beginX;
 	y = -*cameraY + beginY;
@@ -35,30 +35,35 @@ void MainCharacter::Update(Environment *environment)
 	//std::cout << "X" << *cameraX << std::endl;
 	//std::cout << "Y" << *cameraY << std::endl;
 }
+void MainCharacter::ResetKeyState()
+{
+	key = idle;
+}
 void MainCharacter::CheckCollision(Environment *environment)
 {
 	for (int i = 0; i < environment->GetTrees().size(); i++)
 		if (IsColiding(environment->GetTrees()[i]->GetTrunk()->GetCollisonRect()))
-		{
-			int epsilon = 10;
-			switch (key)
-			{
-			case moveUp:
-				*cameraY = *cameraY - epsilon;
-				break;
-			case moveDown:
-				*cameraY = *cameraY + epsilon;
-				break;
-			case moveLeft:
-				*cameraX = *cameraX + epsilon;
-				break;
-			case moveRight:
-				*cameraX = *cameraX - epsilon;
-				break;
-			default:
-				break;
-			}
-		}
+			BrushAsideCharacter(10);
+}
+void MainCharacter::BrushAsideCharacter(int epsilon)
+{
+	switch (key)
+	{
+		case moveUp:
+			*cameraY = *cameraY - epsilon;
+			break;
+		case moveDown:
+			*cameraY = *cameraY + epsilon;
+			break;
+		case moveLeft:
+			*cameraX = *cameraX + epsilon;
+			break;
+		case moveRight:
+			*cameraX = *cameraX - epsilon;
+			break;
+		default:
+			break;
+	}
 }
 bool MainCharacter::CheckIfEnemyIsColidingCharacter(Character *enemyCharacter)
 {

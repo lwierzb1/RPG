@@ -39,7 +39,7 @@ Sprite::Sprite(SDL_Renderer *passedRenderer, std::string FilePath, int x, int y,
 
 	SetPicture(FilePath, amountOfXFrames, amountOfYFrames);
 	currentFrame = 0;
-	collisionImage = IMG_LoadTexture(renderer, "Data/Debug/CollisionBox.png");
+
 	/*collisionImage = IMG_LoadTexture(renderer, "Data/Debug/CollisionBox.png");
 	if (collisionImage == NULL)
 	{
