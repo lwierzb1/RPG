@@ -1,9 +1,0 @@
-﻿  RPG.cpp
-  MainCharacter.cpp
-c:\users\lukasz\desktop\game\rpg\rpg\maincharacter.cpp(49): warning C4018: "<": niezgodność typu ze znakiem/bez znaku
-  Main.cpp
-c:\users\lukasz\desktop\game\rpg\rpg\main.cpp(14): warning C4244: "argument": konwersja z "double" do "int", możliwa utrata danych
-  Fight.cpp
-  Generowanie kodu...
-     Trwa tworzenie biblioteki C:\Users\Lukasz\Desktop\Game\RPG\Debug\RPG.lib i obiektu C:\Users\Lukasz\Desktop\Game\RPG\Debug\RPG.exp
-  RPG.vcxproj -> C:\Users\Lukasz\Desktop\Game\RPG\Debug\RPG.exe
