@@ -4,9 +4,9 @@
 class Sprite
 {
 public:
-	Sprite(SDL_Renderer *passedRenderer, std::string FilePath, int x, int y, int w, int h, int*passedCameraX, int*passedCameraY, int amountOfXFrames, int amountOfYFrames, CollisionRectangle passedCollisonRect);
-	Sprite(SDL_Renderer *passedRenderer, std::string FilePath, int x, int y, int w, int h, int*passedCameraX, int*passedCameraY, CollisionRectangle passedCollisonRect);
-	Sprite(SDL_Renderer *passedRenderer, std::string FilePath, int x, int y, int w, int h, CollisionRectangle passedCollisonRect);
+	Sprite(SDL_Renderer *passedRenderer, string FilePath, int x, int y, int w, int h, int*passedCameraX, int*passedCameraY, int amountOfXFrames, int amountOfYFrames, CollisionRectangle passedCollisonRect);
+	Sprite(SDL_Renderer *passedRenderer, string FilePath, int x, int y, int w, int h, int*passedCameraX, int*passedCameraY, CollisionRectangle passedCollisonRect);
+	Sprite(SDL_Renderer *passedRenderer, string FilePath, int x, int y, int w, int h, CollisionRectangle passedCollisonRect);
 	Sprite();
 	~Sprite();
 
@@ -30,13 +30,13 @@ public:
 	bool isColiding(CollisionRectangle theColider);
 	CollisionRectangle getCollisonRect();
 	SDL_Rect getRect();
-	void setPicture(std::string Path, int amountOfXFrames, int amountOfYFrames);
+	void setPicture(string Path, int amountOfXFrames, int amountOfYFrames);
 	SDL_Texture* getImagetexture();
 	void setAmountOfXFrames(int xFrames);
 	void setAmountOfYFrames(int yFrames);
 	int getAmountOfXFrames();
 	int getAmountOfYFrames();
-	void changeImage(std::string Path, int amountOfXFrames, int amountOfYFrames, int x, int y, int w, int h);
+	void changeImage(string Path, int amountOfXFrames, int amountOfYFrames, int x, int y, int w, int h);
 private:
 	SDL_Texture *image;
 	SDL_Texture *collisionImage;

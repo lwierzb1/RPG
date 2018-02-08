@@ -1,7 +1,5 @@
 #pragma once
 #include "stdafx.h"
-#include "SDL_setup.h"
-#include <SDL_ttf.h>
 #include "Sprite.h"
 #include "MainCharacter.h"
 #include "Environment.h"
@@ -20,20 +18,21 @@ public:
 	void drawBattleMessages();
 	void viewFightResult(Character *winner);
 private:
+	Properties properties;
 	const Uint8 *keyboardState;
 	//The font that's going to be used 
 	TTF_Font *font = NULL;
 	//The color of the font 
 	SDL_Color White = { 255, 255, 255 };
-	SDL_Color RED = { 255, 0, 0 };
+	SDL_Color Red = { 255, 0, 0 };
 	SDL_Surface* surfaceMessage[5];
 	SDL_Texture* battleMessage[5];
 	SDL_Rect battleMessageRect[5];
 	int amountOfMenuRects;
 	int amountOfAllBattleRects;
-	std::string playerHp;
-	std::string enemyHp;
-	std::string availableActions[3] = { "Attack", "Defence", "Flee" };
+	string playerHp;
+	string enemyHp;
+	string availableActions[3] = { "Attack", "Defence", "Flee" };
 	int currentOption = 0;
 	enum CurrentAction {
 		ATTACK,
@@ -46,13 +45,13 @@ private:
 	MainCharacter *character;
 	Character *enemy;
 	Environment *forestArea;
-	friend inline CurrentAction& operator++(CurrentAction& eDOW, int)  // <--- note -- must be a reference
+	friend inline CurrentAction& operator++(CurrentAction& eDOW, int)
 	{
 		const int i = static_cast<int>(eDOW) + 1;
 		eDOW = static_cast<CurrentAction>((i) % 3);
 		return eDOW;
 	}
-	friend inline CurrentAction& operator--(CurrentAction& type, int)  // <--- note -- must be a reference
+	friend inline CurrentAction& operator--(CurrentAction& type, int)
 	{
 		const int i = static_cast<int>(type) - 1;
 

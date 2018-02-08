@@ -5,10 +5,14 @@
 #include "Environment.h"
 #include "CollisionRectangle.h"
 #include "Character.h"
+#define GO_DOWN 0
+#define GO_UP 1
+#define GO_LEFT 2
+#define GO_RIGHT 3
 class MainCharacter : public Character
 {
 public:
-	MainCharacter(SDL_Renderer *passedRenderer, std::string FilePath, int x, int y, int w, int h, int *passedCameraX, int *passedCameraY, int amountOfXFrames, int amountOfYFrames, CollisionRectangle passedCollisonRect);
+	MainCharacter(SDL_Renderer *passedRenderer, string FilePath, int x, int y, int w, int h, int *passedCameraX, int *passedCameraY, int amountOfXFrames, int amountOfYFrames, CollisionRectangle passedCollisonRect);
 	~MainCharacter();
 	void brushAsideCharacter(int epsilon);
 	void update(Environment *environment);
@@ -18,6 +22,7 @@ public:
 	void ResetKeyState();
 	void levelUp();
 private:
+	Properties properties;
 	void scanKeys();
 	void moveCharacter();
 	void CheckCollision(Environment *environment);

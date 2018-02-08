@@ -1,17 +1,17 @@
-#include "stdafx.h"
+
 #include "Main.h"
-using namespace cppproperties;
 
 Main::Main(int passedScreenWidth, int passedScreenHeight)
 {
-	quit = false;
+	properties = PropertiesParser::Read("GameConfig.properties");
+	quit = properties.stringToBool(properties.getProperty("Quit"));;
 	cameraX = 0;
 	cameraY = 0;
 	screenWidth = passedScreenWidth;
 	screenHeight = passedScreenHeight;
 	sdlSetup = new SDL_setup(&quit, screenWidth, screenHeight);
 	forestArea = new Environment(sdlSetup, screenWidth, screenHeight, &cameraX, &cameraY);
-	character = new MainCharacter(sdlSetup->getRenderer(), "data/character.png", (WINDOW_WIDTH) / 2, (WINDOW_HEIGHT) / 2,100,120, &cameraX, &cameraY, 6, 4, CollisionRectangle((WINDOW_WIDTH) / 2, (WINDOW_HEIGHT) / 2 *1.25, 100, 120*0.3));
+	character = new MainCharacter(sdlSetup->getRenderer(), "data/character.png", (screenWidth) / 2, (screenHeight) / 2,100,120, &cameraX, &cameraY, 6, 4, CollisionRectangle((screenWidth) / 2, (screenHeight) / 2 *1.25, 100, 120*0.3));
 	/*enemies.push_back(new Character(sdlSetup->getRenderer(), "data/enemyCharacter.png", 857, 126, 150, 150, &cameraX, &cameraY, 1, 1, CollisionRectangle(0, 0, 150, 150),1));
 	enemies.push_back(new Character(sdlSetup->getRenderer(), "data/enemyCharacter.png", 1210, 423, 150,150, &cameraX, &cameraY, 1, 1, CollisionRectangle(0,0,150,150),2));
 	enemies.push_back(new Character(sdlSetup->getRenderer(), "data/enemyCharacter.png", 747, 570, 150, 150, &cameraX, &cameraY, 1, 1, CollisionRectangle(0, 0, 150, 150),3));
@@ -30,7 +30,7 @@ Main::~Main()
 	delete character;
 	delete forestArea;
 	delete character;
-	for (std::vector<Character*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
+	for (vector<Character*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
 		delete (*i);
 	enemies.clear();
 }
@@ -72,26 +72,31 @@ void Main::GameLoop(void)
 }
 void Main::saveToFile()
 {
-	std::string enemiesPosition = "";
+	string enemiesPosition = "";
 
 	Properties properties;
 
-	for (std::vector<Character*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
-		enemiesPosition += std::to_string((*i)->getLevel()) + "@" + std::to_string((*i)->getX()) + "$" + std::to_string((*i)->getY()) + "$";
+	for (vector<Character*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
+		enemiesPosition += to_string((*i)->getLevel()) + "@" + to_string((*i)->getX()) + "$" + to_string((*i)->getY()) + "$";
 
 	properties.AddProperty("Enemies", enemiesPosition);
 	PropertiesParser::Write("Map.properties", properties);
 
-	std::cout << "Level saved!" << std::endl;
+	cout << "Level saved!" << endl;
 }
 void Main::loadFromFile()
 {
 	Properties properties = PropertiesParser::Read("Map.properties");
-	std::vector<std::string> enemy;
-	std::string line = properties.getProperty("Enemies");
+	vector<string> enemy;
+	string line = properties.getProperty("Enemies");
 	char x[] = "$@";
 	int y = sizeof(x);
 	enemy = PropertiesParser::Split(line, x);
+	properties = PropertiesParser::Read("GameConfig.properties");
+	int enemyWidth = stoi(properties.getProperty("EnemyCharacterWidth"));
+	int enemyHeight = stoi(properties.getProperty("EnemyCharacterHeight"));
+	int enemyMapXFrmaes = stoi(properties.getProperty("EnemyCharacterMapXFrames"));
+	int enemyMapYFrames = stoi(properties.getProperty("EnemyCharacterMapYFrames"));
 	//current number of iteration
 	int iteration = 0;
 	//temp X for enemy
@@ -100,22 +105,21 @@ void Main::loadFromFile()
 	int tempY = 0;
 	//temp lvl for enemy
 	int tempLevel = 0;
-	for (std::vector<std::string>::iterator i = enemy.begin(); i != enemy.end(); ++i)
+	for (vector<string>::iterator i = enemy.begin(); i != enemy.end(); ++i)
 	{
 		if (iteration % 3 == 0 || iteration == 0) // every third (and 0) value is level 
-			tempLevel = std::stoi((*i));
+			tempLevel = stoi((*i));
 		else if ((iteration - 1)% 3 == 0 )	//second, fifth,eighth so if i substract 1 i will get (iteration starts with 0) 0,3,6,
-			 tempX = std::stoi((*i));
+			 tempX = stoi((*i));
 		else
 		{
-			tempY = std::stoi((*i));
-			enemies.push_back(new Character(sdlSetup->getRenderer(), "data/enemyCharacter.png", tempX, tempY, 150, 150, &cameraX, &cameraY, 1, 1, CollisionRectangle(0, 0, 150, 150), tempLevel));
+			tempY = stoi((*i));
+			enemies.push_back(new Character(sdlSetup->getRenderer(), "data/enemyCharacter.png", tempX, tempY, enemyWidth, 
+											enemyHeight, &cameraX, &cameraY, enemyMapXFrmaes, enemyMapYFrames, 
+											CollisionRectangle(0, 0, enemyWidth, enemyHeight), tempLevel));
 		}
 		iteration++;
 	}
-
-	std::cout << "Level loaded!" << std::endl;
-	std::cout << line << std::endl;
 }
 bool Main::getQuit(void)
 {

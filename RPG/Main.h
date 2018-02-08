@@ -5,8 +5,7 @@
 #include "Environment.h"
 #include "Character.h"
 #include "Fight.h"
-#include "PropertiesParser.h"
-#include "Properties.h"
+#include "stdafx.h"
 class Main
 {
 public:
@@ -21,6 +20,7 @@ public:
 	
 
 private:
+	Properties properties;
 	int screenWidth;
 	int screenHeight;
 	int cameraX;
@@ -29,7 +29,7 @@ protected:
 	bool quit;
 	SDL_setup *sdlSetup;
 	MainCharacter *character;
-	std::vector<Character*> enemies;
+	vector<Character*> enemies;
 	//Character *enemy;
 	Environment *forestArea;
 };

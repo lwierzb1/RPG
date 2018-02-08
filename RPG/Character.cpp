@@ -1,28 +1,30 @@
-#include "stdafx.h"
 #include "Character.h"
 
-
-Character::Character(SDL_Renderer *passedRenderer, std::string FilePath, int x, int y, int w, int h, int *passedCameraX, int *passedCameraY, int amountOfXFrames, int amountOfYFrames, CollisionRectangle passedCollisonRect)
+Character::Character(SDL_Renderer *passedRenderer, string FilePath, int x, int y, int w, int h, int *passedCameraX, int *passedCameraY, int amountOfXFrames, int amountOfYFrames, CollisionRectangle passedCollisonRect)
 	:Sprite(passedRenderer, FilePath, x, y, w, h, passedCameraX, passedCameraY, amountOfXFrames, amountOfYFrames, passedCollisonRect)
 {
+	Properties properties = PropertiesParser::Read("GameConfig.properties");
 	level = 1;
-	isAttacking = false;
-	strength = level * 5;
-	defence = level * 5 + 2;
-	health = 100;
-	mayAttack = false;
-	luck = 5 * level;
-}
-Character::Character(SDL_Renderer *passedRenderer, std::string FilePath, int x, int y, int w, int h, int *passedCameraX, int *passedCameraY, int amountOfXFrames, int amountOfYFrames, CollisionRectangle passedCollisonRect, int level)
+	isAttacking = properties.stringToBool(properties.getProperty("EnemyCharacterIsAttacking"));
+	strength = level * stoi(properties.getProperty("EnemyCharacterStrengthFactor"));
+	defence = level * stoi(properties.getProperty("EnemyCharacterDefenceFactor"));
+	mayAttack = properties.stringToBool(properties.getProperty("EnemyCharacterMayAttack"));
+	luck = stoi(properties.getProperty("EnemyCharacterLuckFactorial")) * level;
+	health = stoi(properties.getProperty("EnemyCharacterInitialHealth")) + 
+			 level * stoi(properties.getProperty("EnemyCharacterHealthFactor"));
+}	
+Character::Character(SDL_Renderer *passedRenderer, string FilePath, int x, int y, int w, int h, int *passedCameraX, int *passedCameraY, int amountOfXFrames, int amountOfYFrames, CollisionRectangle passedCollisonRect, int level)
 	:Sprite(passedRenderer, FilePath, x, y, w, h, passedCameraX, passedCameraY, amountOfXFrames, amountOfYFrames, passedCollisonRect)
 {
+	Properties properties = PropertiesParser::Read("GameConfig.properties");
 	this->level = level;
-	isAttacking = false;
-	strength = level * 5;
-	defence = level * 5 + 2;
-	health = 100 + level * 10;
-	mayAttack = false;
-
+	isAttacking = properties.stringToBool(properties.getProperty("EnemyCharacterIsAttacking"));;
+	strength = level * stoi(properties.getProperty("EnemyCharacterStrengthFactor"));
+	defence = level * stoi(properties.getProperty("EnemyCharacterDefenceFactor"));
+	mayAttack = properties.stringToBool(properties.getProperty("EnemyCharacterMayAttack"));
+	luck = stoi(properties.getProperty("EnemyCharacterLuckFactorial")) * level;
+	health = stoi(properties.getProperty("EnemyCharacterInitialHealth")) + 
+			 level * stoi(properties.getProperty("EnemyCharacterHealthFactor"));
 }
 void Character::setX(int x)
 {

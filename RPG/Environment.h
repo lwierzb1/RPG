@@ -19,18 +19,20 @@ public:
 	void update();
 	void saveToFile();
 	void loadFromFile();
-	std::vector<Tree*> getTrees();
+	vector<Tree*> getTrees();
 private:
-	std::vector<Tree*> trees;
+	vector<Tree*> trees;
 
 	bool keyPressed;
 	int mode;
 	int *cameraX;
 	int *cameraY;
+	int amountOfGrassColumns;
+	int amountOfGrassRows;
 	Sprite *arena;
 	Sprite *grass[COLUMNS_GRASS][ROWS_GRASS];
 	SDL_setup *sdlSetup;
-
+	Properties properties;
 	enum gameMode {
 		gamePlay,
 		levelCreation

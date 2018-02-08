@@ -11,7 +11,7 @@ Sprite::Sprite(SDL_Renderer *passedRenderer, std::string FilePath, int x, int y,
 	renderer = passedRenderer;
 	this->amountOfXFrames = amountOfXFrames;
 	this->amountOfYFrames = amountOfYFrames;
-	setPicture(FilePath,this-> amountOfXFrames,this->amountOfYFrames);
+	setPicture(FilePath, this->amountOfXFrames, this->amountOfYFrames);
 	/*collisionImage = IMG_LoadTexture(renderer, "Data/Debug/CollisionBox.png");
 	if (collisionImage == NULL)
 	{
@@ -172,7 +172,7 @@ void Sprite::setCurrentFrame(int frame)
 }
 int Sprite::playAnimation(int beginFrame, int endFrame, int row, int speed)
 {
-	
+
 	if (animationDelay + speed < (int)SDL_GetTicks())
 	{
 		if (endFrame <= currentFrame)
@@ -201,7 +201,7 @@ bool Sprite::isColiding(CollisionRectangle theColider)
 	int coliderW = theColider.getRectangle().w;
 	int coliderH = theColider.getRectangle().h;
 
-	return !(x + w <= coliderX || y + h <= coliderY ||x >= coliderX + coliderW || y >= coliderY + coliderH);
+	return !(x + w <= coliderX || y + h <= coliderY || x >= coliderX + coliderW || y >= coliderY + coliderH);
 }
 int Sprite::getAmountOfXFrames()
 {

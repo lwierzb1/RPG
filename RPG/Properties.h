@@ -60,7 +60,7 @@ namespace cppproperties {
 		* If the property doesn't exist a PropertyNotFoundException will be thrown.
 		*/
 		void RemoveProperty(const std::string& key);
-		
+		bool stringToBool(std::string var);
 	private:
 		// to preserve the order
 		std::vector<std::string> keys;

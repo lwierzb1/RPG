@@ -1,16 +1,29 @@
-#include "stdafx.h"
 #include "Tree.h"
-
 
 Tree::Tree(SDL_setup *sdlSetup, int x, int y, int *cameraX, int *cameraY)
 {
+	Properties properties = PropertiesParser::Read("GameConfig.properties");
+
 	this->x = x;
 	this->y = y;
 
 	this->cameraX = cameraX;
 	this->cameraY = cameraY;
-	trunk = new Sprite(sdlSetup->getRenderer(), "data/environment/treeTrunk.png", x, y, 50, 80, cameraX, cameraY, CollisionRectangle(0,80*0.5,50,80*0.5));
-	branch = new Sprite(sdlSetup->getRenderer(), "data/environment/treeBranch.png", x -(250-50)/2*0.71 , y - (325-90), 250*0.75, 325*0.75, cameraX, cameraY, CollisionRectangle(0, 0, 250 * 0.75, 325 * 0.75));
+	
+	trunk = new Sprite(sdlSetup->getRenderer(), "data/environment/treeTrunk.png", x, y, 
+			stoi(properties.getProperty("TrunkWidth")), 
+			stoi(properties.getProperty("TrunkHeight")), cameraX, cameraY, 
+			CollisionRectangle(stoi(properties.getProperty("TrunkCollisionX")),
+							   stoi(properties.getProperty("TrunkCollisionY")),
+							   stoi(properties.getProperty("TrunkCollisionWidth")),
+							   stoi(properties.getProperty("TrunkCollisionHeight"))));
+	
+	branch = new Sprite(sdlSetup->getRenderer(), "data/environment/treeBranch.png", 
+							   x - stoi(properties.getProperty("BranchX")), 
+							   y - stoi(properties.getProperty("BranchY")),
+							   stoi(properties.getProperty("BranchWidth")),
+							   stoi(properties.getProperty("BranchHeight")), 
+							   cameraX, cameraY, CollisionRectangle());
 }
 void Tree::drawTree()
 {

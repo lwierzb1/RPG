@@ -1,15 +1,16 @@
-#include "stdafx.h"
 #include "SDL_setup.h"
-
 
 SDL_setup::SDL_setup(bool *quit, int screenWidth, int screenHeight)
 {
 	SDL_Init(SDL_INIT_VIDEO);
 	window = NULL;
-	window = SDL_CreateWindow("RPG", 100, 100, screenWidth, screenHeight, SDL_WINDOW_SHOWN);
+	Properties properties = PropertiesParser::Read("GameConfig.properties");
+	window = SDL_CreateWindow("RPG", stoi(properties.getProperty("GameWindowX")),
+									 stoi(properties.getProperty("GameWindowY")), 
+									 screenWidth, screenHeight, SDL_WINDOW_SHOWN);
 	if (window == NULL)
 	{
-		std::cout << "Window couldn't be created" << std::endl;
+		cout << "Window couldn't be created" << endl;
 		*quit = true;
 	}
 	renderer = NULL;

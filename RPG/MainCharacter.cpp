@@ -1,25 +1,30 @@
 #include "MainCharacter.h"
 
-MainCharacter::MainCharacter(SDL_Renderer *passedRenderer, std::string FilePath, int x, int y, int w, int h, int *passedCameraX, int *passedCameraY, int amountOfXFrames, int amountOfYFrames, CollisionRectangle passedCollisonRect)
+MainCharacter::MainCharacter(SDL_Renderer *passedRenderer, string FilePath, int x, int y, int w, int h, int *passedCameraX, int *passedCameraY, int amountOfXFrames, int amountOfYFrames, CollisionRectangle passedCollisonRect)
 	:Character(passedRenderer,FilePath,x,y,w,h,passedCameraX,passedCameraY, amountOfXFrames, amountOfYFrames, passedCollisonRect)
 {
+	properties = PropertiesParser::Read("GameConfig.properties");
 	timeCheck = SDL_GetTicks();
 	
 	level = 1;
-	strength = 15;
-	initialHealth = health;
+
+
 	experience = 0;
-	speed = 3;
-	luck = 5;
-	experienceNeededToNextLevel = 100;
-	isAttacking = false;
-	mayAttack = true;
+
+	experienceNeededToNextLevel = stoi(properties.getProperty("MainCharacterExpNeeded"));
+	isAttacking = properties.stringToBool(properties.getProperty("MainCharacterIsAttacking"));
+	strength = level * stoi(properties.getProperty("MainCharacterStrength"));
+	defence = level * stoi(properties.getProperty("MainCharacterDefence"));
+	initialHealth = stoi(properties.getProperty("MainCharacterInitialHealth"));
+	mayAttack = properties.stringToBool(properties.getProperty("MainCharacterMayAttack"));
+	luck = stoi(properties.getProperty("MainCharacterLuck")) * level;
+	speed = stoi(properties.getProperty("MainCharacterSpeed"));	
+
+	beginX = stoi(properties.getProperty("GameWindowWidth")) / 2;
+	beginY = stoi(properties.getProperty("GameWindowHeight")) / 2;
 	
-	beginX = (WINDOW_WIDTH ) / 2;
-	beginY = (WINDOW_HEIGHT) / 2;
-	
-	setHeightCrop(getImageHeight() / AMOUNT_OF_ROWS_CHAR);
-	setWidthCrop(getImageWidth() / AMOUNT_OF_COLUMNS_CHAR);
+	setHeightCrop(getImageHeight() / stoi(properties.getProperty("MainCharacterMapYFrames")));
+	setWidthCrop(getImageWidth() / stoi(properties.getProperty("MainCharacterMapXFrames")));
 	
 	key = idle;
 	keyboardState = SDL_GetKeyboardState(NULL);
@@ -32,8 +37,8 @@ void MainCharacter::update(Environment *environment)
 	//update location of character
 	x = *cameraX + beginX;
 	y = -*cameraY + beginY;
-	//std::cout << "X" << x << std::endl;
-	//std::cout << "Y" << y << std::endl;
+	//cout << "X" << x << endl;
+	//cout << "Y" << y << endl;
 }
 void MainCharacter::ResetKeyState()
 {

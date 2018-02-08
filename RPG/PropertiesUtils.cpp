@@ -5,26 +5,26 @@ namespace cppproperties {
 	namespace PropertiesUtils {
 
 		namespace {
-			const std::string TRIM_DELIMITERS = " \f\n\r\t\v";
-			std::string ltrim(const std::string& str) {
-				std::string::size_type s = str.find_first_not_of(TRIM_DELIMITERS);
-				if (s == std::string::npos) {
+			const string TRIM_DELIMITERS = " \f\n\r\t\v";
+			string ltrim(const string& str) {
+				string::size_type s = str.find_first_not_of(TRIM_DELIMITERS);
+				if (s == string::npos) {
 					return "";
 				}
 				return str.substr(s);
 			}
 		}
 
-		std::string RightTrim(const std::string& str) {
-			std::string::size_type s = str.find_last_not_of(TRIM_DELIMITERS);
-			if (s == std::string::npos) {
+		string RightTrim(const string& str) {
+			string::size_type s = str.find_last_not_of(TRIM_DELIMITERS);
+			if (s == string::npos) {
 				return "";
 			}
 			return str.substr(0, s + 1);
 		}
 
-		std::string LeftTrim(const std::string& str) {
-			std::string rstr = ltrim(str);
+		string LeftTrim(const string& str) {
+			string rstr = ltrim(str);
 
 			while (rstr != ltrim(rstr)) {
 				rstr = ltrim(rstr);
@@ -33,17 +33,17 @@ namespace cppproperties {
 			return rstr;
 		}
 
-		std::string Trim(const std::string& str) {
+		string Trim(const string& str) {
 			return RightTrim(LeftTrim(str));
 		}
 
-		bool IsProperty(const std::string& str) {
-			std::string trimmedStr = LeftTrim(str);
-			std::string::size_type s = trimmedStr.find_first_of("=");
-			if (s == std::string::npos) {
+		bool IsProperty(const string& str) {
+			string trimmedStr = LeftTrim(str);
+			string::size_type s = trimmedStr.find_first_of("=");
+			if (s == string::npos) {
 				return false;
 			}
-			std::string key = Trim(trimmedStr.substr(0, s));
+			string key = Trim(trimmedStr.substr(0, s));
 			// key can't be empty
 			if (key == "") {
 				return false;
@@ -51,22 +51,22 @@ namespace cppproperties {
 			return true;
 		}
 
-		std::pair<std::string, std::string> ParseProperty(const std::string& str) {
-			std::string trimmedStr = LeftTrim(str);
-			std::string::size_type s = trimmedStr.find_first_of("=");
-			std::string key = Trim(trimmedStr.substr(0, s));
-			std::string value = LeftTrim(trimmedStr.substr(s + 1));
+		pair<string, string> ParseProperty(const string& str) {
+			string trimmedStr = LeftTrim(str);
+			string::size_type s = trimmedStr.find_first_of("=");
+			string key = Trim(trimmedStr.substr(0, s));
+			string value = LeftTrim(trimmedStr.substr(s + 1));
 
-			return std::pair<std::string, std::string>(key, value);
+			return pair<string, string>(key, value);
 		}
 
-		bool isComment(const std::string& str) {
-			std::string trimmedStr = LeftTrim(str);
+		bool isComment(const string& str) {
+			string trimmedStr = LeftTrim(str);
 			return trimmedStr[0] == '#';
 		}
 
-		bool IsEmptyLine(const std::string& str) {
-			std::string trimmedStr = LeftTrim(str);
+		bool IsEmptyLine(const string& str) {
+			string trimmedStr = LeftTrim(str);
 			return trimmedStr == "";
 		}
 

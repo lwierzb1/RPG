@@ -3,3 +3,7 @@ f/
 Data/
 *.gif
 *.png
+Debug/
+Properties.*
+PropertiesParser.*
+PropertiesUtils.*

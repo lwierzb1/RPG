@@ -1,6 +1,7 @@
 #pragma once
 #include "SDL_setup.h"
 #include "Sprite.h"
+#include "stdafx.h"
 class Tree
 {
 public:

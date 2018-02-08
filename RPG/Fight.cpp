@@ -1,15 +1,28 @@
 #include "Fight.h"
 Fight::Fight(SDL_setup *sdlSetup, MainCharacter *mainCharacter, Character *enemyCharacter, Environment *environment)
 {
+	properties = PropertiesParser::Read("GameConfig.properties");
 	//two last are for player hp and enemy hp
 	amountOfMenuRects = sizeof(battleMessage) / sizeof(battleMessage[0]) - 2;
 	amountOfAllBattleRects = sizeof(battleMessage) / sizeof(battleMessage[0]);
-	quit = false;
+	quit = properties.stringToBool(properties.getProperty("Quit"));
 	currentAction = ATTACK;
+	
 	character = mainCharacter;
-	character->changeImage("data/characterFight.png", 10, 1, 200, 300, 150, 170);
+	character->changeImage("data/characterFight.png", stoi(properties.getProperty("MainCharacterFightXFrames")), 
+													  stoi(properties.getProperty("MainCharacterFightYFrames")),
+													  stoi(properties.getProperty("MainCharacterFightX")), 
+													  stoi(properties.getProperty("MainCharacterFightY")), 
+													  stoi(properties.getProperty("MainCharacterFightW")), 
+													  stoi(properties.getProperty("MainCharacterFightH")));
 	enemy = enemyCharacter;
-	enemy->changeImage("data/enemyAttack42.png", 42, 1, 250,-25, 360, 400);
+	enemy->changeImage("data/enemyAttack42.png", stoi(properties.getProperty("EnemyCharacterFightXFrames")), 
+												 stoi(properties.getProperty("EnemyCharacterFightYFrames")), 
+												 stoi(properties.getProperty("EnemyCharacterFightX")),
+												 stoi(properties.getProperty("EnemyCharacterFightY")),
+												 stoi(properties.getProperty("EnemyCharacterFightW")),
+												 stoi(properties.getProperty("EnemyCharacterFightH")));
+	
 	this->sdlSetup = sdlSetup;
 	forestArea = environment;
 	TTF_Init();
@@ -86,14 +99,24 @@ void Fight::viewFightResult(Character *winner)
 	std::string aggressorClassName = typeid(*winner).name();
 	if (aggressorClassName.find("MainCharacter") != std::string::npos)
 	{
-		surfaceMessage = TTF_RenderText_Solid(font, "YOU HAVE WON press any key...", RED);
-		enemy->changeImage("data/enemyLose17.png", 17, 1, 250, -25, 360, 400);
+		surfaceMessage = TTF_RenderText_Solid(font, "YOU HAVE WON press any key...", Red);
+		enemy->changeImage("data/enemyLose17.png", stoi(properties.getProperty("EnemyCharacterFightLoseXFrames")),
+		stoi(properties.getProperty("EnemyCharacterFightLoseYFrames")),
+		stoi(properties.getProperty("EnemyCharacterFightX")),
+		stoi(properties.getProperty("EnemyCharacterFightY")),
+		stoi(properties.getProperty("EnemyCharacterFightW")),
+		stoi(properties.getProperty("EnemyCharacterFightH")));
 	}
 	else
 	{
 		mainCharacterWon = false;
-		surfaceMessage = TTF_RenderText_Solid(font, "YOU HAVE LOST press any key...", RED);
-		enemy->changeImage("data/enemyWin25.png", 25, 1, 250, -25, 360, 400);
+		surfaceMessage = TTF_RenderText_Solid(font, "YOU HAVE LOST press any key...", Red);
+		enemy->changeImage("data/enemyWin25.png", stoi(properties.getProperty("EnemyCharacterFightWinXFrames")),
+		stoi(properties.getProperty("EnemyCharacterFightWinYFrames")),
+		stoi(properties.getProperty("EnemyCharacterFightX")),
+		stoi(properties.getProperty("EnemyCharacterFightY")),
+		stoi(properties.getProperty("EnemyCharacterFightW")),
+		stoi(properties.getProperty("EnemyCharacterFightH")));
 	}
 	messageLost = SDL_CreateTextureFromSurface(sdlSetup->getRenderer(), surfaceMessage);
 	message_rectLost.x = 100;  //controls the rect's x coordinate 
@@ -111,9 +134,19 @@ void Fight::viewFightResult(Character *winner)
 	}
 	enemy->setCurrentFrame(enemy->getAmountOfXFrames() - 1);
 	if (mainCharacterWon)
-		enemy->changeImage("data/enemyLoseIdle1.png", 1, 1, 250, -25, 360, 400);
+		enemy->changeImage("data/enemyLoseIdle1.png", stoi(properties.getProperty("EnemyCharacterFightLoseIdleXFrames")),
+		stoi(properties.getProperty("EnemyCharacterFightLoseIdleYFrames")),
+		stoi(properties.getProperty("EnemyCharacterFightX")),
+		stoi(properties.getProperty("EnemyCharacterFightY")),
+		stoi(properties.getProperty("EnemyCharacterFightW")),
+		stoi(properties.getProperty("EnemyCharacterFightH")));
 	else
-		enemy->changeImage("data/enemyWinIdle5.png", 5, 1, 250, -25, 360, 400);
+		enemy->changeImage("data/enemyWinIdle5.png", stoi(properties.getProperty("EnemyCharacterFightWinIdleXFrames")),
+		stoi(properties.getProperty("EnemyCharacterFightWinIdleYFrames")),
+		stoi(properties.getProperty("EnemyCharacterFightX")),
+		stoi(properties.getProperty("EnemyCharacterFightY")),
+		stoi(properties.getProperty("EnemyCharacterFightW")),
+		stoi(properties.getProperty("EnemyCharacterFightH")));
 	while (sdlSetup->getMainEvent()->type != SDL_KEYDOWN)
 	{
 		sdlSetup->beginRender();
@@ -146,7 +179,7 @@ void Fight::performAttack(Character *aggressor, Character *victim)
 		aggressor->mayAttack = false;
 		//critical strike
 		if (rand() % 100 <= aggressor->getLuck())
-			victim->setHealth(victim->getHealth() - (2*aggressor->getStrength() - victim->getDefence()));
+			victim->setHealth(victim->getHealth() - (2*aggressor->getStrength()));
 		else
 		{
 			if(aggressor->getStrength() <= victim->getDefence())
@@ -177,7 +210,7 @@ void Fight::configFightMenu()
 	for (int i = 0; i < sizeof(battleMessage)/sizeof(battleMessage[0]) - 2; i++)
 	{
 		if (i == 0)
-			surfaceMessage[i] = TTF_RenderText_Solid(font, availableActions[i].c_str(), RED);
+			surfaceMessage[i] = TTF_RenderText_Solid(font, availableActions[i].c_str(), Red);
 		else
 			surfaceMessage[i] = TTF_RenderText_Solid(font, availableActions[i].c_str(), White);
 		battleMessage[i] = SDL_CreateTextureFromSurface(sdlSetup->getRenderer(), surfaceMessage[i]);
@@ -207,7 +240,7 @@ void Fight::updateFightMenu()
 	playerHp = "Your HP:  " + std::to_string(character->getHealth());
 	enemyHp = "Enemy HP:  " + std::to_string(enemy->getHealth());
 	
-	surfaceMessage[currentAction] = TTF_RenderText_Solid(font, availableActions[currentAction].c_str(), RED);
+	surfaceMessage[currentAction] = TTF_RenderText_Solid(font, availableActions[currentAction].c_str(), Red);
 	battleMessage[currentAction] = SDL_CreateTextureFromSurface(sdlSetup->getRenderer(), surfaceMessage[currentAction]);
 
 	surfaceMessage[amountOfAllBattleRects - 2] = TTF_RenderText_Solid(font, enemyHp.c_str(), White);
